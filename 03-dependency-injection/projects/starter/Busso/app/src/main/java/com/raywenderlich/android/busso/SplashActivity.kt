@@ -45,6 +45,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.raywenderlich.android.busso.di.LOCATION_MANAGER
 import com.raywenderlich.android.location.api.model.LocationEvent
 import com.raywenderlich.android.location.api.model.LocationPermissionGranted
 import com.raywenderlich.android.location.api.model.LocationPermissionRequest
@@ -71,7 +72,6 @@ class SplashActivity : AppCompatActivity() {
 
   private val handler = Handler()
   private val disposables = CompositeDisposable()
-  private lateinit var locationManager: LocationManager
   private lateinit var locationObservable: Observable<LocationEvent>
   private lateinit var navigator: Navigator
 
@@ -87,7 +87,7 @@ class SplashActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     makeFullScreen()
     setContentView(R.layout.activity_splash)
-    locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    val locationManager: LocationManager = lookUp(LOCATION_MANAGER)
     locationObservable = provideRxLocationObservable(locationManager, permissionChecker)
     navigator = NavigatorImpl(this)
   }
