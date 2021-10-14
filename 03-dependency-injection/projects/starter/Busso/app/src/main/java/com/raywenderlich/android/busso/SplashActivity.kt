@@ -47,6 +47,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.raywenderlich.android.busso.di.GEO_PERMISSION_CHECKER
 import com.raywenderlich.android.busso.di.LOCATION_MANAGER
+import com.raywenderlich.android.busso.di.LOCATION_OBSERVABLE
 import com.raywenderlich.android.location.api.model.LocationEvent
 import com.raywenderlich.android.location.api.model.LocationPermissionGranted
 import com.raywenderlich.android.location.api.model.LocationPermissionRequest
@@ -81,9 +82,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         makeFullScreen()
         setContentView(R.layout.activity_splash)
-        val locationManager: LocationManager = lookUp(LOCATION_MANAGER)
-        val permissionChecker: GeoLocationPermissionChecker = lookUp(GEO_PERMISSION_CHECKER)
-        locationObservable = provideRxLocationObservable(locationManager, permissionChecker)
+        locationObservable = lookUp(LOCATION_OBSERVABLE)
         navigator = NavigatorImpl(this)
     }
 
