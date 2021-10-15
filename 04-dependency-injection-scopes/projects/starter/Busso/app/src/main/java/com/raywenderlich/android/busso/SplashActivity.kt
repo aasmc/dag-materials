@@ -76,11 +76,12 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         makeFullScreen()
         setContentView(R.layout.activity_splash)
-        locationObservable = lookUp(LOCATION_OBSERVABLE)
 
         activityServiceLocator = lookUp<ServiceLocatorFactory<AppCompatActivity>>(
             ACTIVITY_LOCATOR_FACTORY
         ).invoke(this)
+
+        locationObservable = activityServiceLocator.lookUp(LOCATION_OBSERVABLE)
 
         navigator = activityServiceLocator.lookUp(NAVIGATOR)
     }
