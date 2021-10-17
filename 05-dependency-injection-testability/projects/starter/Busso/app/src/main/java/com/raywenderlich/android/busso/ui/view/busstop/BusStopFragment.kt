@@ -63,121 +63,35 @@ import io.reactivex.schedulers.Schedulers
  */
 class BusStopFragment : Fragment() {
 
-  private val disposables = CompositeDisposable()
-  lateinit var locationObservable: Observable<LocationEvent>
-  lateinit var navigator: Navigator
-  lateinit var bussoEndpoint: BussoEndpoint
-  private lateinit var busStopRecyclerView: RecyclerView
-  private val busStopAdapter =
-    BusStopListAdapter(object :
-      OnItemSelectedListener<BusStopViewModel> {
-      override fun invoke(pos: Int, busStopViewModel: BusStopViewModel) {
-        navigator.navigateTo(
-          FragmentFactoryDestination(
-            fragmentFactory = { bundle ->
-              BusArrivalFragment().apply {
-                arguments = bundle
-              }
-            },
-            anchorId = R.id.anchor_point,
-            withBackStack = "BusArrival",
-            bundle = bundleOf(
-              BUS_STOP_ID to busStopViewModel.stopId
-            )
-          )
-        )
-      }
-    })
+    lateinit var busStopListViewBinder: BusStopListViewBinder
+    lateinit var busStopListPresenter: BusStopListPresenter
 
-  override fun onAttach(context: Context) {
-    BusStopFragmentInjector.inject(this)
-    super.onAttach(context)
-  }
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? = inflater.inflate(R.layout.fragment_busstop_layout, container, false).apply {
-    busStopRecyclerView = findViewById(R.id.busstop_recyclerview)
-    initRecyclerView(busStopRecyclerView)
-  }
-
-  override fun onStart() {
-    super.onStart()
-    subscribeToLocation()
-  }
-
-  override fun onStop() {
-    disposables.clear()
-    super.onStop()
-  }
-
-  private fun isLocationEvent(locationEvent: LocationEvent) =
-    locationEvent !is LocationPermissionRequest && locationEvent !is LocationPermissionGranted
-
-  private fun handleLocationEvent(locationEvent: LocationEvent) {
-    when (locationEvent) {
-      is LocationNotAvailable -> displayLocationNotAvailable()
-      is LocationData -> useLocation(locationEvent.location)
+    override fun onAttach(context: Context) {
+        BusStopFragmentInjector.inject(this)
+        super.onAttach(context)
     }
-  }
 
-  private fun useLocation(location: GeoLocation) {
-    context?.let { ctx ->
-      disposables.add(
-        bussoEndpoint
-          .findBusStopByLocation(location.latitude, location.longitude, 500)
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .map(::mapBusStop)
-          .subscribe(busStopAdapter::submitList, ::handleBusStopError)
-      )
+    override fun onStart() {
+        super.onStart()
+        with(busStopListPresenter) {
+            bind(busStopListViewBinder)
+            start()
+        }
     }
-  }
 
-  private fun handleBusStopError(error: Throwable) {
-    // TODO Handle errors
-  }
-
-  private fun displayLocationNotAvailable() {
-    Snackbar.make(
-      busStopRecyclerView,
-      R.string.warning_location_not_available,
-      Snackbar.LENGTH_LONG
-    )
-      .setAction(R.string.message_retry) {
-        subscribeToLocation()
-      }
-      .show()
-  }
-
-  private fun handleError(error: Throwable) {
-    Snackbar.make(
-      busStopRecyclerView,
-      R.string.error_problem_getting_location,
-      Snackbar.LENGTH_LONG
-    )
-      .setAction(R.string.message_retry) {
-        subscribeToLocation()
-      }
-      .show()
-  }
-
-  private fun subscribeToLocation() {
-    disposables.add(
-      locationObservable
-        .filter(::isLocationEvent)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(::handleLocationEvent, ::handleError)
-    )
-  }
-
-  private fun initRecyclerView(busStopRecyclerView: RecyclerView) {
-    busStopRecyclerView.apply {
-      val viewManager = LinearLayoutManager(busStopRecyclerView.context)
-      layoutManager = viewManager
-      adapter = busStopAdapter
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.fragment_busstop_layout, container, false).apply {
+        busStopListViewBinder.init(this)
     }
-  }
+
+    override fun onStop() {
+        with(busStopListPresenter) {
+            stop()
+            unbind()
+        }
+        super.onStop()
+    }
 }

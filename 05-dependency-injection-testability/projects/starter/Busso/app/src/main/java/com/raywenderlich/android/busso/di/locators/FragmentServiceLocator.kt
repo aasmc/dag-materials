@@ -35,25 +35,80 @@
 package com.raywenderlich.android.busso.di.locators
 
 import androidx.fragment.app.Fragment
+import com.raywenderlich.android.busso.network.BussoEndpoint
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListPresenter
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListPresenterImpl
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListViewBinder
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListViewBinderImpl
+import com.raywenderlich.android.location.api.model.LocationEvent
+import com.raywenderlich.android.ui.navigation.Navigator
+import io.reactivex.Observable
+
+const val BUSSTOP_LIST_PRESENTER = "BusStopListPresenter"
+const val BUSSTOP_LIST_VIEWBINDER = "BusStopListViewBinder"
 
 val fragmentServiceLocatorFactory: (ServiceLocator) -> ServiceLocatorFactory<Fragment> =
-  { fallbackServiceLocator: ServiceLocator ->
-    { fragment: Fragment ->
-      FragmentServiceLocator(fragment).apply {
-        activityServiceLocator = fallbackServiceLocator
-      }
+    { fallbackServiceLocator: ServiceLocator ->
+        { fragment: Fragment ->
+            FragmentServiceLocator(fragment).apply {
+                activityServiceLocator = fallbackServiceLocator
+            }
+        }
     }
-  }
 
 class FragmentServiceLocator(
-  val fragment: Fragment
+    val fragment: Fragment
 ) : ServiceLocator {
 
-  var activityServiceLocator: ServiceLocator? = null
+    var activityServiceLocator: ServiceLocator? = null
+    var busStopListPresenter: BusStopListPresenter? = null
+    var busStopListViewBinder: BusStopListViewBinder? = null
 
-  @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
-  override fun <A : Any> lookUp(name: String): A = when (name) {
-    else -> activityServiceLocator?.lookUp<A>(name)
-      ?: throw IllegalArgumentException("No component lookup for the key: $name")
-  } as A
+    @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
+    override fun <A : Any> lookUp(name: String): A = when (name) {
+        BUSSTOP_LIST_PRESENTER -> {
+            if (busStopListPresenter == null) {
+                val navigator: Navigator = activityServiceLocator!!.lookUp(NAVIGATOR)
+                val locationObservable: Observable<LocationEvent> = activityServiceLocator!!.lookUp(
+                    LOCATION_OBSERVABLE
+                )
+                val bussoEndPoint: BussoEndpoint = activityServiceLocator!!.lookUp(BUSSO_ENDPOINT)
+                busStopListPresenter = BusStopListPresenterImpl(
+                    navigator,
+                    locationObservable,
+                    bussoEndPoint
+                )
+            }
+            busStopListPresenter
+        }
+        BUSSTOP_LIST_VIEWBINDER -> {
+            if (busStopListViewBinder == null) {
+                val busStopListPresenter: BusStopListPresenter = lookUp(BUSSTOP_LIST_PRESENTER)
+                busStopListViewBinder = BusStopListViewBinderImpl(busStopListPresenter)
+            }
+            busStopListViewBinder
+        }
+        else -> activityServiceLocator?.lookUp<A>(name)
+            ?: throw IllegalArgumentException("No component lookup for the key: $name")
+    } as A
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

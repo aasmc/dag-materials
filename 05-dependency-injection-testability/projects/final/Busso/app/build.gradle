@@ -65,7 +65,7 @@ dependencies {
 
   // Testing Dependencies
   testImplementation "junit:junit:$junit_version"
-  testImplementation "org.robolectric:robolectric:$robolectric_version"
+  testImplementation "org.robolectric:robolectric:4.6.1"
   testImplementation "androidx.test:core:$androidx_test_core_version"
   testImplementation "com.squareup.okhttp3:mockwebserver:$ok_http_version"
   testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_version"
