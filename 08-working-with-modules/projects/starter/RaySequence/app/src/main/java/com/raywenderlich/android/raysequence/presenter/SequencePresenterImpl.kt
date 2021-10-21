@@ -51,11 +51,11 @@ class SequencePresenterImpl @Inject constructor(
     SequencePresenter {
 
   @Inject
-  lateinit var sequenceModel: SequenceGenerator<Int>
+  lateinit var sequenceModel: dagger.Lazy<SequenceGenerator<Int>>
 
   override fun displayNextValue() {
     useViewBinder {
-      showNextValue(sequenceModel.next())
+      showNextValue(sequenceModel.get().next())
     }
   }
 

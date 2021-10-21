@@ -8,14 +8,14 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface AppBindings {
+abstract class AppBindings {
     @Binds
-    fun bindSequenceViewBinder(impl: SequenceViewBinderImpl): SequenceViewBinder
+    abstract fun bindSequenceViewBinder(impl: SequenceViewBinderImpl): SequenceViewBinder
 
     @Binds
-    fun bindSequencePresenter(impl: SequencePresenterImpl): SequencePresenter
+    abstract fun bindSequencePresenter(impl: SequencePresenterImpl): SequencePresenter
 
     @Binds
-    fun bindViewBinderListener(impl: SequencePresenter):
+    abstract fun bindViewBinderListener(impl: SequencePresenter):
             SequenceViewBinder.Listener
 }

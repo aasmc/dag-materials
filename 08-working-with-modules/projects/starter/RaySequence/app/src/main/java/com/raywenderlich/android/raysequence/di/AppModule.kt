@@ -47,9 +47,12 @@ import dagger.Module
 import dagger.Provides
 
 @Module(includes = [AppBindings::class])
-object AppModule {
+abstract class AppModule {
+    companion object {
 
-    @Provides
-    fun provideSequenceGenerator(): SequenceGenerator<Int> =
-        NaturalSequenceGenerator(0)
+        @JvmStatic
+        @Provides
+        fun provideSequenceGenerator(): SequenceGenerator<Int> =
+            NaturalSequenceGenerator(0)
+    }
 }

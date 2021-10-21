@@ -36,8 +36,13 @@
 
 package com.raywenderlich.android.raysequence.model
 
+import java.lang.Thread.sleep
+
 /** SequenceGenerator for natural sequence */
 class NaturalSequenceGenerator(private var start: Int) : SequenceGenerator<Int> {
+  init {
+      sleep(3000)
+  }
 
   override fun next(): Int = start++
 }
