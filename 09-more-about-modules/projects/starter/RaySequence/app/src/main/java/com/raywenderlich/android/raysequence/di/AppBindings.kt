@@ -41,18 +41,22 @@ import com.raywenderlich.android.raysequence.presenter.SequencePresenterImpl
 import com.raywenderlich.android.raysequence.view.SequenceViewBinder
 import com.raywenderlich.android.raysequence.view.SequenceViewBinderImpl
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 
 @Module
 abstract class AppBindings {
 
-  @Binds
-  abstract fun bindSequenceViewBinder(impl: SequenceViewBinderImpl): SequenceViewBinder
+    @Binds
+    abstract fun bindSequenceViewBinder(impl: SequenceViewBinderImpl): SequenceViewBinder
 
-  @Binds
-  abstract fun bindSequencePresenter(impl: SequencePresenterImpl): SequencePresenter
+    @Binds
+    abstract fun bindSequencePresenter(impl: SequencePresenterImpl): SequencePresenter
 
-  @Binds
-  abstract fun bindViewBinderListener(impl: SequencePresenter):
-      SequenceViewBinder.Listener
+    @BindsOptionalOf
+    abstract fun provideSequenceViewBinderListener(): SequenceViewBinder.Listener
+
+    @Binds
+    abstract fun bindViewBinderListener(impl: SequencePresenter):
+            SequenceViewBinder.Listener
 }

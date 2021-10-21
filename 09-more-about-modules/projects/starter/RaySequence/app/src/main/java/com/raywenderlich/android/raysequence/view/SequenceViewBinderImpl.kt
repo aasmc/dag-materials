@@ -40,15 +40,18 @@ import android.content.Context
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import com.google.common.base.Optional
 import com.raywenderlich.android.raysequence.MainActivity
 import com.raywenderlich.android.raysequence.R
 import javax.inject.Inject
 
 /** SequenceViewBinder implementation */
 class SequenceViewBinderImpl @Inject constructor(
-    private val sequenceViewListener: SequenceViewBinder.Listener,
     private val context: Context
 ) : SequenceViewBinder {
+
+    @set:Inject
+    var sequenceViewListener: Optional<SequenceViewBinder.Listener> = Optional.absent()
 
     private lateinit var output: TextView
 
@@ -63,7 +66,9 @@ class SequenceViewBinderImpl @Inject constructor(
     override fun init(rootView: MainActivity) {
         output = rootView.findViewById(R.id.sequence_output_textview)
         rootView.findViewById<Button>(R.id.next_value_button).setOnClickListener {
-            sequenceViewListener.onNextValuePressed()
+            if (sequenceViewListener.isPresent) {
+                sequenceViewListener.get().onNextValuePressed()
+            }
         }
     }
 }
