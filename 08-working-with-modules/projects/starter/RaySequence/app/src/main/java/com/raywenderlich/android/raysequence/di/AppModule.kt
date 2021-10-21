@@ -46,24 +46,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
-@Module
+@Module(includes = [AppBindings::class])
 object AppModule {
 
-  @Provides
-  fun provideSequenceGenerator(): SequenceGenerator<Int> =
-      NaturalSequenceGenerator(0)
-
-  @Module
-  interface Bindings {
-
-    @Binds
-    fun bindSequenceViewBinder(impl: SequenceViewBinderImpl): SequenceViewBinder
-
-    @Binds
-    fun bindSequencePresenter(impl: SequencePresenterImpl): SequencePresenter
-
-    @Binds
-    fun bindViewBinderListener(impl: SequencePresenter):
-        SequenceViewBinder.Listener
-  }
+    @Provides
+    fun provideSequenceGenerator(): SequenceGenerator<Int> =
+        NaturalSequenceGenerator(0)
 }
