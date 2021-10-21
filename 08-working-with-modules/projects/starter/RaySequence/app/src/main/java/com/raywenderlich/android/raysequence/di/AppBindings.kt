@@ -1,5 +1,6 @@
 package com.raywenderlich.android.raysequence.di
 
+import com.raywenderlich.android.raysequence.presenter.CycledSequencePresenter
 import com.raywenderlich.android.raysequence.presenter.SequencePresenter
 import com.raywenderlich.android.raysequence.presenter.SequencePresenterImpl
 import com.raywenderlich.android.raysequence.view.SequenceViewBinder
@@ -13,7 +14,7 @@ abstract class AppBindings {
     abstract fun bindSequenceViewBinder(impl: SequenceViewBinderImpl): SequenceViewBinder
 
     @Binds
-    abstract fun bindSequencePresenter(impl: SequencePresenterImpl): SequencePresenter
+    abstract fun bindSequencePresenter(impl: CycledSequencePresenter): SequencePresenter
 
     @Binds
     abstract fun bindViewBinderListener(impl: SequencePresenter):
