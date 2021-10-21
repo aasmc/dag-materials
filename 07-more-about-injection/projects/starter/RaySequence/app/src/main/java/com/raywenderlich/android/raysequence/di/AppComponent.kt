@@ -34,29 +34,22 @@
  *
  */
 
-package com.raywenderlich.android.raysequence.presenter
+package com.raywenderlich.android.raysequence.di
 
-import com.raywenderlich.android.mvp.impl.BasePresenter
 import com.raywenderlich.android.raysequence.MainActivity
-import com.raywenderlich.android.raysequence.model.SequenceGenerator
+import com.raywenderlich.android.raysequence.presenter.SequencePresenter
 import com.raywenderlich.android.raysequence.view.SequenceViewBinder
-import javax.inject.Inject
+import dagger.Component
 import javax.inject.Singleton
 
+@Component(
+    modules = [
+        AppModule::class,
+        AppModule.Bindings::class
+    ]
+)
 @Singleton
-class SequencePresenterImpl @Inject constructor() :
-    BasePresenter<MainActivity, SequenceViewBinder>(), SequencePresenter {
+interface AppComponent {
 
-    @Inject
-    lateinit var sequenceModel: SequenceGenerator<Int>
-
-    override fun displayNextValue() {
-        useViewBinder {
-            showNextValue(sequenceModel.next())
-        }
-    }
-
-    override fun onNextValuePressed() {
-        displayNextValue()
-    }
+    fun inject(mainActivity: MainActivity)
 }

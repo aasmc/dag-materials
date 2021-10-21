@@ -36,26 +36,39 @@
 
 package com.raywenderlich.android.raysequence.view
 
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.raywenderlich.android.raysequence.MainActivity
 import com.raywenderlich.android.raysequence.R
+import javax.inject.Inject
 
 /** SequenceViewBinder implementation */
-class SequenceViewBinderImpl(
-    private val sequenceViewListener: SequenceViewBinder.Listener
+class SequenceViewBinderImpl @Inject constructor(
+//    private val sequenceViewListener: SequenceViewBinder.Listener
 ) : SequenceViewBinder {
 
-  private lateinit var output: TextView
+    private var sequenceViewListener: SequenceViewBinder.Listener? = null
 
-  override fun showNextValue(nextValue: Int) {
-    output.text = "$nextValue"
-  }
-
-  override fun init(rootView: MainActivity) {
-    output = rootView.findViewById(R.id.sequence_output_textview)
-    rootView.findViewById<Button>(R.id.next_value_button).setOnClickListener {
-      sequenceViewListener.onNextValuePressed()
+    init {
+        Log.d("DAGGER_LOG", "Listener: $sequenceViewListener")
     }
-  }
+
+    @Inject
+    fun configSequenceViewListener(listener: SequenceViewBinder.Listener) {
+        sequenceViewListener = listener
+    }
+
+    private lateinit var output: TextView
+
+    override fun showNextValue(nextValue: Int) {
+        output.text = "$nextValue"
+    }
+
+    override fun init(rootView: MainActivity) {
+        output = rootView.findViewById(R.id.sequence_output_textview)
+        rootView.findViewById<Button>(R.id.next_value_button).setOnClickListener {
+            sequenceViewListener?.onNextValuePressed()
+        }
+    }
 }

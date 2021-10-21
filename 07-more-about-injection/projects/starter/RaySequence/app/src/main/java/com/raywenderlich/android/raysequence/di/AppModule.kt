@@ -34,29 +34,65 @@
  *
  */
 
-package com.raywenderlich.android.raysequence.presenter
+package com.raywenderlich.android.raysequence.di
 
-import com.raywenderlich.android.mvp.impl.BasePresenter
-import com.raywenderlich.android.raysequence.MainActivity
+import com.raywenderlich.android.raysequence.model.NaturalSequenceGenerator
 import com.raywenderlich.android.raysequence.model.SequenceGenerator
+import com.raywenderlich.android.raysequence.presenter.SequencePresenter
+import com.raywenderlich.android.raysequence.presenter.SequencePresenterImpl
 import com.raywenderlich.android.raysequence.view.SequenceViewBinder
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.raywenderlich.android.raysequence.view.SequenceViewBinderImpl
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
 
-@Singleton
-class SequencePresenterImpl @Inject constructor() :
-    BasePresenter<MainActivity, SequenceViewBinder>(), SequencePresenter {
+@Module
+object AppModule {
 
-    @Inject
-    lateinit var sequenceModel: SequenceGenerator<Int>
+//    @Provides
+//    fun provideSequenceViewBinder(
+//        viewBinderListener: SequenceViewBinder.Listener
+//    ): SequenceViewBinder = SequenceViewBinderImpl(viewBinderListener)
 
-    override fun displayNextValue() {
-        useViewBinder {
-            showNextValue(sequenceModel.next())
-        }
+    @Provides
+    fun provideSequenceGenerator(): SequenceGenerator<Int> =
+        NaturalSequenceGenerator(0)
+
+    @Module
+    interface Bindings {
+        @Binds
+        fun bindSequenceViewBinder(impl: SequenceViewBinderImpl): SequenceViewBinder
+
+        @Binds
+        fun bindSequencePresenter(impl: SequencePresenterImpl): SequencePresenter
+
+        @Binds
+        fun bindViewBinderListener(impl: SequencePresenter): SequenceViewBinder.Listener
     }
 
-    override fun onNextValuePressed() {
-        displayNextValue()
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
