@@ -42,11 +42,28 @@ import com.raywenderlich.android.raysequence.model.SequenceGenerator
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import javax.inject.Named
+
+const val NATURAL = "NaturalSequence"
+const val FIBONACCI = "FibonacciSequence"
+const val START_VALUE = "StartValue"
 
 @Module(includes = [AppBindings::class])
 interface AppModule {
 
-  @Binds
-  fun bindSequenceGenerator(impl: FibonacciSequenceGenerator): SequenceGenerator<Int>
+    @Binds
+    @Named(FIBONACCI)
+    fun bindsFibonacciSequenceGenerator(impl: FibonacciSequenceGenerator): SequenceGenerator<Int>
+
+    @Binds
+    @Named(NATURAL)
+    fun bindsNaturalSequenceGenerator(impl: NaturalSequenceGenerator): SequenceGenerator<Int>
+
+    companion object {
+        @Provides
+        @JvmStatic
+        @Named(START_VALUE)
+        fun provideStartValue(): Int = 0
+    }
 }
 

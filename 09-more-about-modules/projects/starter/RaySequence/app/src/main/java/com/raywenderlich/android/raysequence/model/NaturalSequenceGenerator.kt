@@ -36,8 +36,15 @@
 
 package com.raywenderlich.android.raysequence.model
 
-/** SequenceGenerator for natural sequence */
-class NaturalSequenceGenerator(private var start: Int) : SequenceGenerator<Int> {
+import com.raywenderlich.android.raysequence.di.START_VALUE
+import javax.inject.Inject
+import javax.inject.Named
 
-  override fun next(): Int = start++
+/** SequenceGenerator for natural sequence */
+class NaturalSequenceGenerator @Inject constructor(
+    @Named(START_VALUE)
+    private var start: Int
+) : SequenceGenerator<Int> {
+
+    override fun next(): Int = start++
 }

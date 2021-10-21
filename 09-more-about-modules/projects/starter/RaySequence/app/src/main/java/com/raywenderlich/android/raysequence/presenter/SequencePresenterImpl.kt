@@ -38,9 +38,11 @@ package com.raywenderlich.android.raysequence.presenter
 
 import com.raywenderlich.android.mvp.impl.BasePresenter
 import com.raywenderlich.android.raysequence.MainActivity
+import com.raywenderlich.android.raysequence.di.NATURAL
 import com.raywenderlich.android.raysequence.model.SequenceGenerator
 import com.raywenderlich.android.raysequence.view.SequenceViewBinder
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 /** SequencePresenter implementation for the MainActivity */
@@ -51,6 +53,7 @@ class SequencePresenterImpl @Inject constructor(
     SequencePresenter {
 
   @Inject
+  @Named(NATURAL)
   lateinit var sequenceModel: SequenceGenerator<Int>
 
   override fun displayNextValue() {

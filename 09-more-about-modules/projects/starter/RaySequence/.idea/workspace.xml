@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13c87210-82f0-4aa2-ab9a-26c44b96ebf3" name="Default Changelist" comment="Add ContextModule">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/view/SequenceViewBinderImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/view/SequenceViewBinderImpl.kt" afterDir="false" />
+    <list default="true" id="13c87210-82f0-4aa2-ab9a-26c44b96ebf3" name="Default Changelist" comment="Use BindsOptionalOf annotation to provide Optional&lt;SequenceViewBinder.Listener&gt;">
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/AppModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/model/NaturalSequenceGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/model/NaturalSequenceGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/presenter/SequencePresenterImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/presenter/SequencePresenterImpl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634844401444</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Use BindsOptionalOf annotation to provide Optional&lt;SequenceViewBinder.Listener&gt;">
+      <created>1634845231597</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1634845231597</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -143,6 +151,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add ContextModule" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add ContextModule" />
+    <MESSAGE value="Use BindsOptionalOf annotation to provide Optional&lt;SequenceViewBinder.Listener&gt;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Use BindsOptionalOf annotation to provide Optional&lt;SequenceViewBinder.Listener&gt;" />
   </component>
 </project>
