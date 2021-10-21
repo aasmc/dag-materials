@@ -36,34 +36,9 @@
 
 package com.raywenderlich.android.raysequence.di
 
-import com.raywenderlich.android.raysequence.conf.Config
-import com.raywenderlich.android.raysequence.model.FibonacciSequenceGenerator
-import com.raywenderlich.android.raysequence.model.NaturalSequenceGenerator
-import com.raywenderlich.android.raysequence.model.SequenceGenerator
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import javax.inject.Named
+import javax.inject.Qualifier
 
-const val NATURAL = "NaturalSequence"
-const val FIBONACCI = "FibonacciSequence"
-const val START_VALUE = "StartValue"
-
-@Module(includes = [AppBindings::class])
-interface AppModule {
-
-    @Binds
-    @FibonacciSequence
-    fun bindsFibonacciSequenceGenerator(impl: FibonacciSequenceGenerator): SequenceGenerator<Int>
-
-    @Binds
-    @NaturalSequence
-    fun bindsNaturalSequenceGenerator(impl: NaturalSequenceGenerator): SequenceGenerator<Int>
-
-    companion object {
-        @Provides
-        @JvmStatic
-        fun provideConf(): Config = Config(0)
-    }
-}
-
+@Qualifier
+@MustBeDocumented
+@Retention(AnnotationRetention.BINARY) // stored in binary output but invisible for reflection
+annotation class NaturalSequence

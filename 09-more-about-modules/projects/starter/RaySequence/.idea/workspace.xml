@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13c87210-82f0-4aa2-ab9a-26c44b96ebf3" name="Default Changelist" comment="Use BindsOptionalOf annotation to provide Optional&lt;SequenceViewBinder.Listener&gt;">
+    <list default="true" id="13c87210-82f0-4aa2-ab9a-26c44b96ebf3" name="Default Changelist" comment="Encapsulate start value into Config">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/FibonacciSequence.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/NaturalSequence.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/AppModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/model/NaturalSequenceGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/model/NaturalSequenceGenerator.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/presenter/SequencePresenterImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/presenter/SequencePresenterImpl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +25,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Class" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Annotation" />
       </list>
     </option>
   </component>
@@ -135,7 +139,21 @@
       <option name="project" value="LOCAL" />
       <updated>1634845231597</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add Named annotation to sequence generators">
+      <created>1634845563709</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1634845563709</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Encapsulate start value into Config">
+      <created>1634845813365</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1634845813365</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -152,6 +170,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add ContextModule" />
     <MESSAGE value="Use BindsOptionalOf annotation to provide Optional&lt;SequenceViewBinder.Listener&gt;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Use BindsOptionalOf annotation to provide Optional&lt;SequenceViewBinder.Listener&gt;" />
+    <MESSAGE value="Add Named annotation to sequence generators" />
+    <MESSAGE value="Encapsulate start value into Config" />
+    <option name="LAST_COMMIT_MESSAGE" value="Encapsulate start value into Config" />
   </component>
 </project>
