@@ -34,36 +34,8 @@
  *
  */
 
-package com.raywenderlich.android.raysequence.di
+package com.raywenderlich.android.raysequence.conf
 
-import com.raywenderlich.android.raysequence.conf.Config
-import com.raywenderlich.android.raysequence.model.FibonacciSequenceGenerator
-import com.raywenderlich.android.raysequence.model.NaturalSequenceGenerator
-import com.raywenderlich.android.raysequence.model.SequenceGenerator
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import javax.inject.Named
-
-const val NATURAL = "NaturalSequence"
-const val FIBONACCI = "FibonacciSequence"
-const val START_VALUE = "StartValue"
-
-@Module(includes = [AppBindings::class])
-interface AppModule {
-
-    @Binds
-    @Named(FIBONACCI)
-    fun bindsFibonacciSequenceGenerator(impl: FibonacciSequenceGenerator): SequenceGenerator<Int>
-
-    @Binds
-    @Named(NATURAL)
-    fun bindsNaturalSequenceGenerator(impl: NaturalSequenceGenerator): SequenceGenerator<Int>
-
-    companion object {
-        @Provides
-        @JvmStatic
-        fun provideConf(): Config = Config(0)
-    }
-}
-
+data class Config(
+    val startValue: Int
+)
