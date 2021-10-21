@@ -2,6 +2,7 @@ plugins {
   id 'com.android.application'
   id 'kotlin-android'
   id 'kotlin-android-extensions'
+  id 'kotlin-kapt'
 }
 apply from: '../versions.gradle'
 
@@ -62,6 +63,10 @@ dependencies {
   // Navigation utility
   implementation project(path: ':libs:ui:navigation')
   implementation project(path: ':libs:mvp')
+
+  // Dagger
+  implementation "com.google.dagger:dagger:$dagger_version"
+  kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
   // Testing Dependencies
   testImplementation "junit:junit:$junit_version"

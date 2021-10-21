@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13c87210-82f0-4aa2-ab9a-26c44b96ebf3" name="Default Changelist" comment="Encapsulate start value into Config">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/FibonacciSequence.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/NaturalSequence.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/di/AppModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/presenter/SequencePresenterImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/raywenderlich/android/raysequence/presenter/SequencePresenterImpl.kt" afterDir="false" />
-    </list>
+    <list default="true" id="13c87210-82f0-4aa2-ab9a-26c44b96ebf3" name="Default Changelist" comment="Implement custom qualifier annotations" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -153,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634845813365</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Implement custom qualifier annotations">
+      <created>1634846236257</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1634846236257</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -172,6 +174,7 @@
     <MESSAGE value="Use BindsOptionalOf annotation to provide Optional&lt;SequenceViewBinder.Listener&gt;" />
     <MESSAGE value="Add Named annotation to sequence generators" />
     <MESSAGE value="Encapsulate start value into Config" />
-    <option name="LAST_COMMIT_MESSAGE" value="Encapsulate start value into Config" />
+    <MESSAGE value="Implement custom qualifier annotations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement custom qualifier annotations" />
   </component>
 </project>

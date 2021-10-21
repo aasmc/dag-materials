@@ -41,9 +41,10 @@ import com.raywenderlich.android.mvp.impl.BasePresenter
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 /** Presenter implementation for the SplashActivity */
-class SplashPresenterImpl constructor(
+class SplashPresenterImpl @Inject constructor(
     private val locationObservable: Observable<LocationEvent>,
 ) : BasePresenter<SplashActivity, SplashViewBinder>(), SplashPresenter {
 
