@@ -36,6 +36,7 @@
 
 package com.raywenderlich.android.raysequence.view
 
+import android.content.Context
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -45,23 +46,24 @@ import javax.inject.Inject
 
 /** SequenceViewBinder implementation */
 class SequenceViewBinderImpl @Inject constructor(
-    private val sequenceViewListener: SequenceViewBinder.Listener
+    private val sequenceViewListener: SequenceViewBinder.Listener,
+    private val context: Context
 ) : SequenceViewBinder {
 
-  private lateinit var output: TextView
+    private lateinit var output: TextView
 
-  init {
-    Log.d("DAGGER_LOG", "Listener: $sequenceViewListener")
-  }
-
-  override fun showNextValue(nextValue: Int) {
-    output.text = "$nextValue"
-  }
-
-  override fun init(rootView: MainActivity) {
-    output = rootView.findViewById(R.id.sequence_output_textview)
-    rootView.findViewById<Button>(R.id.next_value_button).setOnClickListener {
-      sequenceViewListener.onNextValuePressed()
+    init {
+        Log.d("DAGGER_LOG", "Listener: $sequenceViewListener")
     }
-  }
+
+    override fun showNextValue(nextValue: Int) {
+        output.text = context.getString(R.string.value_output_format, nextValue)
+    }
+
+    override fun init(rootView: MainActivity) {
+        output = rootView.findViewById(R.id.sequence_output_textview)
+        rootView.findViewById<Button>(R.id.next_value_button).setOnClickListener {
+            sequenceViewListener.onNextValuePressed()
+        }
+    }
 }

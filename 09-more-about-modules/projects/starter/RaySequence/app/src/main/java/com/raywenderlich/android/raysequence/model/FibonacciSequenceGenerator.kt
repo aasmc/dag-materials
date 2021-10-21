@@ -36,8 +36,10 @@
 
 package com.raywenderlich.android.raysequence.model
 
+import javax.inject.Inject
+
 /** SequenceGenerator for the Fibonacci sequence*/
-class FibonacciSequenceGenerator() : SequenceGenerator<Int> {
+class FibonacciSequenceGenerator @Inject constructor() : SequenceGenerator<Int> {
 
   private var pair = 0 to 1
 

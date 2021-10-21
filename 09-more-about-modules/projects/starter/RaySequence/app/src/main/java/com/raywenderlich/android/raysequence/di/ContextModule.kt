@@ -36,17 +36,13 @@
 
 package com.raywenderlich.android.raysequence.di
 
-import com.raywenderlich.android.raysequence.model.FibonacciSequenceGenerator
-import com.raywenderlich.android.raysequence.model.NaturalSequenceGenerator
-import com.raywenderlich.android.raysequence.model.SequenceGenerator
-import dagger.Binds
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 
-@Module(includes = [AppBindings::class])
-interface AppModule {
+@Module
+class ContextModule(val context: Context) {
 
-  @Binds
-  fun bindSequenceGenerator(impl: FibonacciSequenceGenerator): SequenceGenerator<Int>
+    @Provides
+    fun provideContext(): Context = context
 }
-

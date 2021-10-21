@@ -40,9 +40,14 @@ import com.raywenderlich.android.raysequence.MainActivity
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = [AppModule::class])
+@Component(
+    modules = [
+        AppModule::class,
+        ContextModule::class
+    ]
+)
 @Singleton
 interface AppComponent {
 
-  fun inject(mainActivity: MainActivity)
+    fun inject(mainActivity: MainActivity)
 }

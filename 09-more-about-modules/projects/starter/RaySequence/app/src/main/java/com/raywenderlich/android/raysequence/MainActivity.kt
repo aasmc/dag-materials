@@ -35,6 +35,7 @@ package com.raywenderlich.android.raysequence
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.raywenderlich.android.raysequence.di.ContextModule
 import com.raywenderlich.android.raysequence.di.DaggerAppComponent
 import com.raywenderlich.android.raysequence.presenter.SequencePresenter
 import com.raywenderlich.android.raysequence.view.SequenceViewBinder
@@ -42,26 +43,31 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-  @Inject
-  lateinit var presenter: SequencePresenter
+    @Inject
+    lateinit var presenter: SequencePresenter
 
-  @Inject
-  lateinit var viewBinder: SequenceViewBinder
+    @Inject
+    lateinit var viewBinder: SequenceViewBinder
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    DaggerAppComponent.create().inject(this)
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
-    viewBinder.init(this)
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        DaggerAppComponent
+            .builder()
+            .contextModule(ContextModule(this))
+            .build()
+            .inject(this)
 
-  override fun onStart() {
-    super.onStart()
-    presenter.bind(viewBinder)
-  }
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        viewBinder.init(this)
+    }
 
-  override fun onStop() {
-    presenter.unbind()
-    super.onStop()
-  }
+    override fun onStart() {
+        super.onStart()
+        presenter.bind(viewBinder)
+    }
+
+    override fun onStop() {
+        presenter.unbind()
+        super.onStop()
+    }
 }
