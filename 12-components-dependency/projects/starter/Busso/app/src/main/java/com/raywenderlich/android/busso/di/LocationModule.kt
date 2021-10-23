@@ -37,6 +37,7 @@ package com.raywenderlich.android.busso.di
 import android.app.Application
 import android.content.Context
 import android.location.LocationManager
+import com.raywenderlich.android.busso.di.scopes.ApplicationScope
 import com.raywenderlich.android.busso.permission.GeoLocationPermissionCheckerImpl
 import com.raywenderlich.android.location.api.model.LocationEvent
 import com.raywenderlich.android.location.api.permissions.GeoLocationPermissionChecker
@@ -48,12 +49,12 @@ import javax.inject.Singleton
 
 @Module
 class LocationModule {
-  @Singleton
+  @ApplicationScope
   @Provides
   fun provideLocationManager(application: Application): LocationManager =
       application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-  @Singleton
+  @ApplicationScope
   @Provides
   fun providePermissionChecker(application: Application): GeoLocationPermissionChecker =
       GeoLocationPermissionCheckerImpl(application)

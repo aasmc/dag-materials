@@ -37,6 +37,7 @@ package com.raywenderlich.android.busso.network
 import android.app.Application
 import com.google.gson.GsonBuilder
 import com.raywenderlich.android.busso.conf.BUSSO_SERVER_BASE_URL
+import com.raywenderlich.android.busso.di.scopes.ApplicationScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -50,19 +51,19 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
   @Provides
-  @Singleton
+  @ApplicationScope
   fun provideCache(application: Application): Cache =
       Cache(application.cacheDir, 100 * 1024L)// 100K
 
   @Provides
-  @Singleton
+  @ApplicationScope
   fun provideHttpClient(cache: Cache): OkHttpClient =
       Builder()
           .cache(cache)
           .build()
 
   @Provides
-  @Singleton
+  @ApplicationScope
   fun provideBussoEndPoint(httpClient: OkHttpClient): BussoEndpoint {
     val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BUSSO_SERVER_BASE_URL)

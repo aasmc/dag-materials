@@ -39,30 +39,30 @@ import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.busso.R
 import com.raywenderlich.android.busso.appComp
 import com.raywenderlich.android.busso.di.ActivityComponent
-import com.raywenderlich.android.busso.di.DaggerActivityComponent
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-  @Inject
-  lateinit var mainPresenter: MainPresenter
+    @Inject
+    lateinit var mainPresenter: MainPresenter
 
-  lateinit var comp: ActivityComponent
+    lateinit var comp: ActivityComponent
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
-    comp = DaggerActivityComponent
-        .factory()
-        .create(this, this.application.appComp)
-        .apply {
-          inject(this@MainActivity)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        comp = application.appComp
+            .activityComponentFactory()
+            .create(this)
+            .apply {
+                inject(this@MainActivity)
+            }
+
+        if (savedInstanceState == null) {
+            mainPresenter.goToBusStopList()
         }
-    if (savedInstanceState == null) {
-      mainPresenter.goToBusStopList()
     }
-  }
 }
 
 val Context.activityComp: ActivityComponent
-  get() = (this as MainActivity).comp
+    get() = (this as MainActivity).comp

@@ -41,8 +41,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.raywenderlich.android.busso.R
-import com.raywenderlich.android.busso.appComp
-import com.raywenderlich.android.busso.di.DaggerFragmentComponent
 import com.raywenderlich.android.busso.ui.view.main.activityComp
 import javax.inject.Inject
 
@@ -62,11 +60,10 @@ class BusArrivalFragment : Fragment() {
   }
 
   override fun onAttach(context: Context) {
-    with(context) {
-      DaggerFragmentComponent.factory()
-          .create(applicationContext.appComp, activityComp)
-          .inject(this@BusArrivalFragment)
-    }
+    context.activityComp
+      .fragmentComponent()
+      .inject(this)
+
     super.onAttach(context)
   }
 

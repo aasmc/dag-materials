@@ -39,7 +39,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.busso.R
 import com.raywenderlich.android.busso.appComp
-import com.raywenderlich.android.busso.di.DaggerActivityComponent
 import javax.inject.Inject
 
 /**
@@ -59,9 +58,11 @@ class SplashActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     makeFullScreen()
     setContentView(R.layout.activity_splash)
-    DaggerActivityComponent.factory()
-        .create(this, this.application.appComp)
-        .inject(this)
+    application.appComp
+      .activityComponentFactory()
+      .create(this)
+      .inject(this)
+
     splashViewBinder.init(this)
   }
 

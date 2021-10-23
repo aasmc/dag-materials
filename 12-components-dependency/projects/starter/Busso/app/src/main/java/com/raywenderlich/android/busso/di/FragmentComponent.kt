@@ -38,24 +38,15 @@ import com.raywenderlich.android.busso.di.scopes.FragmentScope
 import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalFragment
 import com.raywenderlich.android.busso.ui.view.busstop.BusStopFragment
 import dagger.Component
+import dagger.Subcomponent
 
-@Component(
-    modules = [FragmentModule::class],
-    dependencies = [ActivityComponent::class, ApplicationComponent::class]
+@Subcomponent(
+    modules = [FragmentModule::class]
 )
 @FragmentScope
 interface FragmentComponent {
 
-  fun inject(fragment: BusStopFragment)
+    fun inject(fragment: BusStopFragment)
 
-  fun inject(fragment: BusArrivalFragment)
-
-  @Component.Factory
-  interface Factory {
-
-    fun create(
-        applicationComponent: ApplicationComponent,
-        activityComponent: ActivityComponent
-    ): FragmentComponent
-  }
+    fun inject(fragment: BusArrivalFragment)
 }
