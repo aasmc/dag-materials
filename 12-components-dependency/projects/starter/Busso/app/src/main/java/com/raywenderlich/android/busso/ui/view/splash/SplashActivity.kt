@@ -59,8 +59,9 @@ class SplashActivity : AppCompatActivity() {
     makeFullScreen()
     setContentView(R.layout.activity_splash)
     application.appComp
-      .activityComponentFactory()
-      .create(this)
+      .activityComponentBuilder()
+      .activity(this)
+      .build()
       .inject(this)
 
     splashViewBinder.init(this)

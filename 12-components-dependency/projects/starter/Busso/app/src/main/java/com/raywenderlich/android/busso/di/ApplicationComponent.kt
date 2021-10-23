@@ -47,7 +47,7 @@ import javax.inject.Singleton
 @ApplicationScope
 interface ApplicationComponent {
 
-  fun activityComponentFactory(): ActivityComponent.Factory
+  fun activityComponentBuilder(): ActivityComponent.Builder
 
   @Component.Factory
   interface Factory {

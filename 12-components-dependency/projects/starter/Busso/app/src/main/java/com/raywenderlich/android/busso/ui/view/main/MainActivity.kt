@@ -52,8 +52,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         comp = application.appComp
-            .activityComponentFactory()
-            .create(this)
+            .activityComponentBuilder()
+            .activity(this)
+            .build()
             .apply {
                 inject(this@MainActivity)
             }

@@ -55,10 +55,10 @@ interface ActivityComponent {
 
     fun fragmentComponent(): FragmentComponent
 
-    @Subcomponent.Factory
-    interface Factory {
-        fun create(
-            @BindsInstance activity: Activity
-        ): ActivityComponent
+    @Subcomponent.Builder
+    interface Builder {
+        fun activity(@BindsInstance activity: Activity): Builder
+
+        fun build(): ActivityComponent
     }
 }
