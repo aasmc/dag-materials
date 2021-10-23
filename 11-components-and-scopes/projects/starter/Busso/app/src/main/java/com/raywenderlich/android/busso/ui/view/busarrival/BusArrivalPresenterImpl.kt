@@ -34,6 +34,7 @@
 
 package com.raywenderlich.android.busso.ui.view.busarrival
 
+import android.util.Log
 import android.view.View
 import com.raywenderlich.android.busso.network.BussoEndpoint
 import com.raywenderlich.android.ui.mvp.impl.BasePresenter
@@ -46,33 +47,36 @@ class BusArrivalPresenterImpl @Inject constructor(
     private val bussoEndpoint: BussoEndpoint
 ) : BasePresenter<View, BusArrivalViewBinder>(),
     BusArrivalPresenter {
-
-  private val disposables = CompositeDisposable()
-
-  override fun fetchBusArrival(stopId: String) {
-    disposables.add(
-        bussoEndpoint
-            .findArrivals(stopId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map(::mapBusArrivals)
-            .subscribe(::displayBusArrival, ::handleBusArrivalError)
-    )
-  }
-
-  override fun stop() {
-    disposables.clear()
-  }
-
-  private fun displayBusArrival(arrivals: BusArrivalsViewModel) {
-    useViewBinder {
-      displayBusArrival(arrivals)
+    init {
+        Log.d("BUSSOENDPOINT", "Arrival: $bussoEndpoint")
     }
-  }
 
-  fun handleBusArrivalError(error: Throwable) {
-    useViewBinder {
-      handleBusArrivalError(error)
+    private val disposables = CompositeDisposable()
+
+    override fun fetchBusArrival(stopId: String) {
+        disposables.add(
+            bussoEndpoint
+                .findArrivals(stopId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(::mapBusArrivals)
+                .subscribe(::displayBusArrival, ::handleBusArrivalError)
+        )
     }
-  }
+
+    override fun stop() {
+        disposables.clear()
+    }
+
+    private fun displayBusArrival(arrivals: BusArrivalsViewModel) {
+        useViewBinder {
+            displayBusArrival(arrivals)
+        }
+    }
+
+    fun handleBusArrivalError(error: Throwable) {
+        useViewBinder {
+            handleBusArrivalError(error)
+        }
+    }
 }

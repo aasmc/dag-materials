@@ -34,6 +34,7 @@
 
 package com.raywenderlich.android.busso.ui.view.busstop
 
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import com.raywenderlich.android.busso.R
@@ -58,6 +59,10 @@ class BusStopListPresenterImpl @Inject constructor(
     private val bussoEndpoint: BussoEndpoint
 ) : BasePresenter<View, BusStopListViewBinder>(),
     BusStopListPresenter {
+
+    init {
+        Log.d("BUSSOENDPOINT", "StopList: $bussoEndpoint")
+    }
 
   private val disposables = CompositeDisposable()
 
