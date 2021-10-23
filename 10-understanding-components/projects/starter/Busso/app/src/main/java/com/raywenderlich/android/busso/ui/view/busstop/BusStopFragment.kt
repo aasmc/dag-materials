@@ -41,7 +41,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.raywenderlich.android.busso.R
-import com.raywenderlich.android.busso.di.injectors.BusStopFragmentInjector
 import com.raywenderlich.android.busso.ui.view.main.comp
 import javax.inject.Inject
 
@@ -58,7 +57,6 @@ class BusStopFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         context.comp?.inject(this)
-        BusStopFragmentInjector.inject(this)
         super.onAttach(context)
     }
 

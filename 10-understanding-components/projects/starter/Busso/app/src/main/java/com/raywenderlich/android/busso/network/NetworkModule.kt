@@ -1,5 +1,6 @@
 package com.raywenderlich.android.busso.network
 
+import android.app.Activity
 import android.content.Context
 import com.google.gson.GsonBuilder
 import com.raywenderlich.android.busso.conf.BUSSO_SERVER_BASE_URL
@@ -14,11 +15,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 private val CACHE_SIZE = 100 * 1024L // 100k
 
 @Module
-class NetworkModule(val context: Context) {
+class NetworkModule {
 
     @Provides
-    fun provideBussoEndPoint(): BussoEndpoint {
-        val cache = Cache(context.cacheDir, CACHE_SIZE)
+    fun provideBussoEndPoint(activity: Activity): BussoEndpoint {
+        val cache = Cache(activity.cacheDir, CACHE_SIZE)
         val okHttpClient = OkHttpClient.Builder()
             .cache(cache)
             .build()

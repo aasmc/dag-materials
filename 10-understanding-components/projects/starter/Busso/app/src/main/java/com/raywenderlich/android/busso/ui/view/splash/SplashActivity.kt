@@ -60,7 +60,7 @@ class SplashActivity : AppCompatActivity() {
         makeFullScreen()
         setContentView(R.layout.activity_splash)
         DaggerAppComponent.builder()
-            .appModule(AppModule(this))
+            .activity(this)
             .build()
             .inject(this)
 

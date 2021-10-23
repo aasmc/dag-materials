@@ -32,19 +32,17 @@ import io.reactivex.Observable
         AppModule.Bindings::class
     ]
 )
-class AppModule(
-    private val activity: Activity
-) {
+class AppModule {
 
     @Provides
-    fun provideLocationObservable(): Observable<LocationEvent> {
+    fun provideLocationObservable(activity: Activity): Observable<LocationEvent> {
         val locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val geoLocationPermissionChecker = GeoLocationPermissionCheckerImpl(activity)
         return provideRxLocationObservable(locationManager, geoLocationPermissionChecker)
     }
 
     @Provides
-    fun provideNavigator(): Navigator = NavigatorImpl(activity)
+    fun provideNavigator(activity: Activity): Navigator = NavigatorImpl(activity)
 
     @Module
     interface Bindings {
