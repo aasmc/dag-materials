@@ -41,43 +41,47 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.raywenderlich.android.busso.R
-import com.raywenderlich.android.busso.di.injectors.BusArrivalFragmentInjector
+import com.raywenderlich.android.busso.ui.view.main.comp
+import javax.inject.Inject
 
 /**
  * The Fragment for displaying the arrival time
  */
 class BusArrivalFragment : Fragment() {
 
-  lateinit var busArrivalViewBinder: BusArrivalViewBinder
-  lateinit var busArrivalPresenter: BusArrivalPresenter
+    @Inject
+    lateinit var busArrivalViewBinder: BusArrivalViewBinder
 
-  companion object {
-    const val BUS_STOP_ID = "BUS_STOP_ID"
-  }
+    @Inject
+    lateinit var busArrivalPresenter: BusArrivalPresenter
 
-  override fun onAttach(context: Context) {
-    BusArrivalFragmentInjector.inject(this)
-    super.onAttach(context)
-  }
+    companion object {
+        const val BUS_STOP_ID = "BUS_STOP_ID"
+    }
 
-  override fun onCreateView(
-      inflater: LayoutInflater,
-      container: ViewGroup?,
-      savedInstanceState: Bundle?
-  ): View? = inflater.inflate(R.layout.fragment_busarrival_layout, container, false).apply {
-    busArrivalViewBinder.init(this)
-  }
+    override fun onAttach(context: Context) {
+        context.comp?.inject(this)
+        super.onAttach(context)
+    }
 
-  override fun onStart() {
-    super.onStart()
-    busArrivalPresenter.bind(busArrivalViewBinder)
-    val busStopId = arguments?.getString(BUS_STOP_ID) ?: ""
-    busArrivalPresenter.fetchBusArrival(busStopId)
-  }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.fragment_busarrival_layout, container, false).apply {
+        busArrivalViewBinder.init(this)
+    }
 
-  override fun onStop() {
-    busArrivalPresenter.unbind()
-    busArrivalPresenter.stop()
-    super.onStop()
-  }
+    override fun onStart() {
+        super.onStart()
+        busArrivalPresenter.bind(busArrivalViewBinder)
+        val busStopId = arguments?.getString(BUS_STOP_ID) ?: ""
+        busArrivalPresenter.fetchBusArrival(busStopId)
+    }
+
+    override fun onStop() {
+        busArrivalPresenter.unbind()
+        busArrivalPresenter.stop()
+        super.onStop()
+    }
 }

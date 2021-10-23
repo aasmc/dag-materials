@@ -40,9 +40,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.raywenderlich.android.busso.R
 import com.raywenderlich.android.busso.ui.events.OnItemSelectedListener
+import javax.inject.Inject
 
 /** BusStopListViewBinder implementation for the BusStopFragment */
-class BusStopListViewBinderImpl(
+class BusStopListViewBinderImpl @Inject constructor (
     private val busStopItemSelectedListener: BusStopListViewBinder.BusStopItemSelectedListener
 ) : BusStopListViewBinder {
 

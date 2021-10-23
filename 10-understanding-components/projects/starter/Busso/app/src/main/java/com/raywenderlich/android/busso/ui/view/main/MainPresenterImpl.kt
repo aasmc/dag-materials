@@ -38,9 +38,10 @@ import com.raywenderlich.android.busso.R
 import com.raywenderlich.android.busso.ui.view.busstop.BusStopFragment
 import com.raywenderlich.android.ui.navigation.FragmentDestination
 import com.raywenderlich.android.ui.navigation.Navigator
+import javax.inject.Inject
 
 /** MainPresenter implementation */
-class MainPresenterImpl constructor(
+class MainPresenterImpl @Inject constructor(
     private val navigator: Navigator
 ) : MainPresenter {
   override fun goToBusStopList() {

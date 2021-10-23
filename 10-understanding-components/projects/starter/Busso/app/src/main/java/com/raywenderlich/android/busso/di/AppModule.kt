@@ -4,6 +4,16 @@ import android.app.Activity
 import android.content.Context
 import android.location.LocationManager
 import com.raywenderlich.android.busso.permission.GeoLocationPermissionCheckerImpl
+import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalPresenter
+import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalPresenterImpl
+import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalViewBinder
+import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalViewBinderImpl
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListPresenter
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListPresenterImpl
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListViewBinder
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListViewBinderImpl
+import com.raywenderlich.android.busso.ui.view.main.MainPresenter
+import com.raywenderlich.android.busso.ui.view.main.MainPresenterImpl
 import com.raywenderlich.android.busso.ui.view.splash.SplashPresenter
 import com.raywenderlich.android.busso.ui.view.splash.SplashPresenterImpl
 import com.raywenderlich.android.busso.ui.view.splash.SplashViewBinder
@@ -44,6 +54,43 @@ class AppModule(
 
         @Binds
         fun bindSplashViewBinder(impl: SplashViewBinderImpl): SplashViewBinder
-    }
 
+        @Binds
+        fun bindMainPresenter(impl: MainPresenterImpl): MainPresenter
+
+        @Binds
+        fun bindBusStopListViewBinder(impl: BusStopListViewBinderImpl): BusStopListViewBinder
+
+        @Binds
+        fun bindBusStopListPresenter(impl: BusStopListPresenterImpl): BusStopListPresenter
+
+        @Binds
+        fun bindBusStopListViewBinderListener(impl: BusStopListPresenterImpl): BusStopListViewBinder.BusStopItemSelectedListener
+
+        @Binds
+        fun bindBusArrivalPresenter(impl: BusArrivalPresenterImpl): BusArrivalPresenter
+
+        @Binds
+        fun bindBusArrivalViewBinder(impl: BusArrivalViewBinderImpl): BusArrivalViewBinder
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
