@@ -22,12 +22,8 @@ interface AppComponent {
 
     fun inject(fragment: BusArrivalFragment)
 
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        fun activity(activity: Activity): Builder
-
-        fun build(): AppComponent
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance activity: Activity): AppComponent
     }
 }

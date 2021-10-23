@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         comp = DaggerAppComponent
-            .builder()
-            .activity(this)
-            .build().apply {
+            .factory()
+            .create(this)
+            .apply {
                 inject(this@MainActivity)
             }
         if (savedInstanceState == null) {
