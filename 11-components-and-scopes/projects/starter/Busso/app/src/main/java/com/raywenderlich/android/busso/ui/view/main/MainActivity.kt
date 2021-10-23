@@ -63,5 +63,5 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-val Context.comp: ActivityComponent?
-    get() = if (this is MainActivity) comp else null
+val Context.activityComp: ActivityComponent
+    get() = (this as MainActivity).comp
