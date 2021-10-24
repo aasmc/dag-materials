@@ -43,6 +43,7 @@ import com.raywenderlich.android.busso.plugins.whereami.endpoint.WhereAmIEndpoin
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.IntoSet
 import retrofit2.Retrofit
 
 @Module(includes = [WhereAmIModule.Bindings::class])
@@ -56,6 +57,7 @@ object WhereAmIModule {
 
   @Provides
   @ApplicationScope
+  @IntoSet
   fun provideWhereAmISpec(endpoint: WhereAmIEndpointImpl): InformationPluginSpec = object : InformationPluginSpec {
     override val informationEndpoint: InformationEndpoint
       get() = endpoint
