@@ -38,25 +38,29 @@ import android.app.Application
 import com.raywenderlich.android.busso.Main
 import com.raywenderlich.android.busso.di.scopes.ApplicationScope
 import com.raywenderlich.android.busso.plugins.di.InformationPluginModule
+import com.raywenderlich.android.busso.plugins.weather.di.WeatherModule
 import com.raywenderlich.android.busso.plugins.whereami.di.WhereAmIModule
 import dagger.BindsInstance
 import dagger.Component
 
-@Component(modules = [
-  ApplicationModule::class,
-  InformationPluginModule.ApplicationBindings::class,
-  WhereAmIModule::class
-])
+@Component(
+    modules = [
+        ApplicationModule::class,
+        InformationPluginModule.ApplicationBindings::class,
+        WhereAmIModule::class,
+        WeatherModule::class
+    ]
+)
 @ApplicationScope
 interface ApplicationComponent {
 
-  fun activityComponentBuilder(): ActivityComponent.Builder
+    fun activityComponentBuilder(): ActivityComponent.Builder
 
-  fun inject(main: Main)
+    fun inject(main: Main)
 
-  @Component.Factory
-  interface Builder {
+    @Component.Factory
+    interface Builder {
 
-    fun create(@BindsInstance application: Application): ApplicationComponent
-  }
+        fun create(@BindsInstance application: Application): ApplicationComponent
+    }
 }
