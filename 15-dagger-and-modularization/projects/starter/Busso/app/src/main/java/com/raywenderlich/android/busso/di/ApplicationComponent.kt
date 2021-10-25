@@ -39,26 +39,31 @@ import com.raywenderlich.android.busso.Main
 import com.raywenderlich.android.busso.plugins.di.InformationPluginModule
 import com.raywenderlich.android.busso.plugins.di.InformationSpecsModule
 import com.raywenderlich.android.di.scopes.ApplicationScope
+import com.raywenderlich.android.networking.NetworkingConfiguration
 import dagger.BindsInstance
 import dagger.Component
 
 @Component(
-  modules = [
-    ApplicationModule::class,
-    InformationPluginModule.ApplicationBindings::class,
-    InformationSpecsModule::class
-  ]
+    dependencies = [NetworkingConfiguration::class],
+    modules = [
+        ApplicationModule::class,
+        InformationPluginModule.ApplicationBindings::class,
+        InformationSpecsModule::class
+    ]
 )
 @ApplicationScope
 interface ApplicationComponent {
 
-  fun activityComponentBuilder(): ActivityComponent.Builder
+    fun activityComponentBuilder(): ActivityComponent.Builder
 
-  fun inject(main: Main)
+    fun inject(main: Main)
 
-  @Component.Factory
-  interface Factory {
+    @Component.Factory
+    interface Factory {
 
-    fun create(@BindsInstance application: Application): ApplicationComponent
-  }
+        fun create(
+            @BindsInstance application: Application,
+            networkingConfiguration: NetworkingConfiguration
+        ): ApplicationComponent
+    }
 }

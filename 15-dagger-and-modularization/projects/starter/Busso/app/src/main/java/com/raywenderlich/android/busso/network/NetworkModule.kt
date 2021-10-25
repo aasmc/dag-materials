@@ -34,53 +34,18 @@
 
 package com.raywenderlich.android.busso.network
 
-import android.app.Application
-import com.google.gson.GsonBuilder
-import com.raywenderlich.android.busso.conf.BUSSO_SERVER_BASE_URL
 import com.raywenderlich.android.di.scopes.ApplicationScope
+import com.raywenderlich.android.networking.di.NetworkingModule
 import dagger.Module
 import dagger.Provides
-import okhttp3.Cache
-import okhttp3.OkHttpClient
-import okhttp3.OkHttpClient.Builder
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
-@Module
-class NetworkModule {
-  @Provides
-  @ApplicationScope
-  fun provideCache(application: Application): Cache =
-    Cache(application.cacheDir, 100 * 1024L)// 100K
+@Module(includes = [NetworkingModule::class])
+object NetworkModule {
 
-  @Provides
-  @ApplicationScope
-  fun provideHttpClient(cache: Cache): OkHttpClient =
-    Builder()
-      .cache(cache)
-      .build()
-
-  @Provides
-  @ApplicationScope
-  fun provideRetrofit(httpClient: OkHttpClient): Retrofit =
-    Retrofit.Builder()
-      .baseUrl(BUSSO_SERVER_BASE_URL)
-      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-      .addConverterFactory(
-        GsonConverterFactory.create(
-          GsonBuilder()
-            .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-            .create()
-        )
-      )
-      .client(httpClient)
-      .build()
-
-
-  @Provides
-  @ApplicationScope
-  fun provideBussoEndPoint(retrofit: Retrofit): BussoEndpoint {
-    return retrofit.create(BussoEndpoint::class.java)
-  }
+    @Provides
+    @ApplicationScope
+    fun provideBussoEndPoint(retrofit: Retrofit): BussoEndpoint {
+        return retrofit.create(BussoEndpoint::class.java)
+    }
 }
