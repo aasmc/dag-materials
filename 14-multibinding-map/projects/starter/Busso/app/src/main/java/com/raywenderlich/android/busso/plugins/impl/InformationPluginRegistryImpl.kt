@@ -42,8 +42,8 @@ import javax.inject.Inject
 /** Implementation for the InformationPluginRegistry */
 @ApplicationScope
 class InformationPluginRegistryImpl @Inject constructor(
-    private val informationPlugins: @JvmSuppressWildcards Set<InformationPluginSpec>
+    private val informationPlugins: @JvmSuppressWildcards Map<String, InformationPluginSpec>
 ) : InformationPluginRegistry {
 
-  override fun plugins(): List<InformationPluginSpec> = informationPlugins.toList()
+  override fun plugins(): List<InformationPluginSpec> = informationPlugins.values.toList()
 }

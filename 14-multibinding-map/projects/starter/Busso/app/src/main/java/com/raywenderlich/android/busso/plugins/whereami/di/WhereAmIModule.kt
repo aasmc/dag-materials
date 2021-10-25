@@ -43,6 +43,8 @@ import com.raywenderlich.android.busso.plugins.whereami.endpoint.WhereAmIEndpoin
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.IntoMap
+import dagger.multibindings.StringKey
 import retrofit2.Retrofit
 import javax.inject.Named
 
@@ -59,13 +61,12 @@ object WhereAmIModule {
 
   @Provides
   @ApplicationScope
-  @Named(WHEREAMI_INFO_NAME) // 3
+  @IntoMap
+  @StringKey(WHEREAMI_INFO_NAME) // 3
   fun provideWhereAmISpec(endpoint: WhereAmIEndpointImpl): InformationPluginSpec =
       object : InformationPluginSpec {
         override val informationEndpoint: InformationEndpoint
           get() = endpoint
-        override val serviceName: String
-          get() = WHEREAMI_INFO_NAME
       }
 
   @Module

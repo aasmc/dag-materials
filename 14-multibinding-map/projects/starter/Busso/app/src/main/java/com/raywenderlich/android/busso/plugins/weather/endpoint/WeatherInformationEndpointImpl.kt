@@ -32,18 +32,16 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.wether.endpoint
+package com.raywenderlich.android.busso.plugins.weather.endpoint
 
-import com.raywenderlich.android.busso.conf.BUSSO_SERVER_BASE_URL
 import com.raywenderlich.android.busso.plugins.model.InfoMessage
+import com.raywenderlich.android.location.api.model.GeoLocation
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
+import javax.inject.Inject
 
-interface WeatherEndpoint {
-  @GET("${BUSSO_SERVER_BASE_URL}weather/{lat}/{lng}")
-  fun fetchWeatherCondition(
-      @Path("lat") latitude: Double,
-      @Path("lng") longitude: Double
-  ): Single<InfoMessage>
+class WeatherInformationEndpointImpl @Inject constructor(
+    private val weatherEndpoint: WeatherEndpoint
+) : WeatherInformationEndpoint {
+  override fun fetchInformation(location: GeoLocation): Single<InfoMessage> =
+      weatherEndpoint.fetchWeatherCondition(location.latitude, location.longitude)
 }
