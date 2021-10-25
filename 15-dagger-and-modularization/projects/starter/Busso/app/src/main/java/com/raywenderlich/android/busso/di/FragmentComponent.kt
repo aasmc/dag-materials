@@ -34,22 +34,22 @@
 
 package com.raywenderlich.android.busso.di
 
-import com.raywenderlich.android.busso.plugins.di.InformationPluginModule
 import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalFragment
 import com.raywenderlich.android.busso.ui.view.busstop.BusStopFragment
 import com.raywenderlich.android.di.scopes.FragmentScope
+import com.raywenderlich.android.plugins.engine.di.InformationPluginEngineModule
 import dagger.Subcomponent
 
 @Subcomponent(
-  modules = [
-    FragmentModule::class,
-    InformationPluginModule.FragmentBindings::class
-  ]
+    modules = [
+        FragmentModule::class,
+        InformationPluginEngineModule.FragmentBindings::class
+    ]
 )
 @FragmentScope
 interface FragmentComponent {
 
-  fun inject(fragment: BusStopFragment)
+    fun inject(fragment: BusStopFragment)
 
-  fun inject(fragment: BusArrivalFragment)
+    fun inject(fragment: BusArrivalFragment)
 }

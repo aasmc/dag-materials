@@ -32,38 +32,13 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.ui
+package com.raywenderlich.android.plugins.api
 
-import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.raywenderlich.android.busso.R
-import com.raywenderlich.android.di.scopes.FragmentScope
-import javax.inject.Inject
+import com.raywenderlich.android.plugins.model.InfoMessage
+import io.reactivex.Single
 
-/** Implementation for InformationPluginViewBinder */
-@FragmentScope
-class InformationPluginViewBinderImpl @Inject constructor() : InformationPluginViewBinder {
+/** Tagging interface about an Information endpoint */
+interface InformationEndpoint {
 
-  private lateinit var informationRecyclerView: RecyclerView
-  private lateinit var informationAdapter: InformationListAdapter
-
-  override fun init(rootView: View) {
-    informationRecyclerView = rootView.findViewById(R.id.information_recyclerview)
-    informationAdapter = InformationListAdapter()
-    initRecyclerView(informationRecyclerView)
-  }
-
-
-  private fun initRecyclerView(busStopRecyclerView: RecyclerView) {
-    informationRecyclerView.apply {
-      val viewManager = LinearLayoutManager(busStopRecyclerView.context)
-      layoutManager = viewManager
-      adapter = informationAdapter
-    }
-  }
-
-  override fun displayInformation(informationList: List<String>) {
-    informationAdapter.submitList(informationList)
-  }
+  fun fetchInformation(latitude: Double, longitude: Double): Single<InfoMessage>
 }

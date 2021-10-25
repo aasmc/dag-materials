@@ -32,16 +32,13 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.di
+package com.raywenderlich.android.plugins.engine.ui
 
-import com.raywenderlich.android.busso.plugins.wether.di.WeatherModule
-import com.raywenderlich.android.busso.plugins.whereami.di.WhereAmIModule
-import dagger.Module
+import android.view.View
+import com.raywenderlich.android.ui.mvp.ViewBinder
 
-@Module(
-  includes = [
-    WhereAmIModule::class,
-    WeatherModule::class
-  ]
-)
-object InformationSpecsModule
+/** Abstraction for the InformationPluginViewBinder */
+interface InformationPluginViewBinder : ViewBinder<View> {
+
+  fun displayInformation(informationList: List<String>)
+}

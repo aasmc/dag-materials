@@ -32,13 +32,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.api
+package com.raywenderlich.android.plugins.api
 
-import dagger.MapKey
-import kotlin.reflect.KClass
-
-@MapKey(unwrapValue = false) // 1
-annotation class ComplexInfoKey(
-  val endpointClass: @JvmSuppressWildcards KClass<out InformationEndpoint>, // 2
-  val name: String // 3
-)
+/** This contains the configuration about the information plugin */
+object InformationPluginSpec

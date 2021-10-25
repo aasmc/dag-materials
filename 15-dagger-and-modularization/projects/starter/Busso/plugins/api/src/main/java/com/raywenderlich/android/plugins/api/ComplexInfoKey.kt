@@ -32,13 +32,13 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.api
+package com.raywenderlich.android.plugins.api
 
-import com.raywenderlich.android.busso.plugins.model.InfoMessage
-import io.reactivex.Single
+import dagger.MapKey
+import kotlin.reflect.KClass
 
-/** Tagging interface about an Information endpoint */
-interface InformationEndpoint {
-
-  fun fetchInformation(latitude: Double, longitude: Double): Single<InfoMessage>
-}
+@MapKey(unwrapValue = false) // 1
+annotation class ComplexInfoKey(
+  val endpointClass: @JvmSuppressWildcards KClass<out InformationEndpoint>, // 2
+  val name: String // 3
+)

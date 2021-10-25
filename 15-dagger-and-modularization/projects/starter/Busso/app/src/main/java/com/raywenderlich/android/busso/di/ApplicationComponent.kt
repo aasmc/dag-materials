@@ -36,10 +36,10 @@ package com.raywenderlich.android.busso.di
 
 import android.app.Application
 import com.raywenderlich.android.busso.Main
-import com.raywenderlich.android.busso.plugins.di.InformationPluginModule
-import com.raywenderlich.android.busso.plugins.di.InformationSpecsModule
+import com.raywenderlich.android.busso.plugins.InformationSpecsModule
 import com.raywenderlich.android.di.scopes.ApplicationScope
 import com.raywenderlich.android.networking.NetworkingConfiguration
+import com.raywenderlich.android.plugins.engine.di.InformationPluginEngineModule
 import dagger.BindsInstance
 import dagger.Component
 
@@ -47,7 +47,7 @@ import dagger.Component
     dependencies = [NetworkingConfiguration::class],
     modules = [
         ApplicationModule::class,
-        InformationPluginModule.ApplicationBindings::class,
+        InformationPluginEngineModule::class,
         InformationSpecsModule::class
     ]
 )

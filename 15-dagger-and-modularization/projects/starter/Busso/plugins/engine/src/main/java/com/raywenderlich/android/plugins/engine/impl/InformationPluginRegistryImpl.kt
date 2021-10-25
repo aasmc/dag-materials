@@ -32,27 +32,28 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.whereami.di
+package com.raywenderlich.android.plugins.engine.impl
 
-import com.raywenderlich.android.busso.plugins.api.ComplexInfoKey
-import com.raywenderlich.android.busso.plugins.api.InformationPluginSpec
-import com.raywenderlich.android.busso.plugins.whereami.endpoint.MyLocationEndpoint
 import com.raywenderlich.android.di.scopes.ApplicationScope
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoMap
+import com.raywenderlich.android.plugins.api.ComplexInfoKey
+import com.raywenderlich.android.plugins.api.InformationEndpoint
+import com.raywenderlich.android.plugins.api.InformationPluginRegistry
+import com.raywenderlich.android.plugins.api.InformationPluginSpec
+import retrofit2.Retrofit
+import javax.inject.Inject
 
-const val WHEREAMI_INFO_NAME = "WhereAmI"
+/** Implementation for the InformationPluginRegistry */
+@ApplicationScope
+class InformationPluginRegistryImpl @Inject constructor(
+  private val retrofit: Retrofit,
+  informationPlugins: @JvmSuppressWildcards Map<ComplexInfoKey, InformationPluginSpec> // 1
+) : InformationPluginRegistry {
 
-@Module
-object WhereAmIModule {
+  private val endpoints = informationPlugins.keys.map { complexKey ->
+    retrofit.create(complexKey.endpointClass.java as Class<*>) // 2
+  }.map { endpoint ->
+    endpoint as InformationEndpoint
+  }.toList()
 
-  @Provides
-  @ApplicationScope
-  @IntoMap
-  @ComplexInfoKey(
-    MyLocationEndpoint::class,
-    WHEREAMI_INFO_NAME
-  )
-  fun provideWhereAmISpec(): InformationPluginSpec = InformationPluginSpec
+  override fun plugins(): List<InformationEndpoint> = endpoints
 }

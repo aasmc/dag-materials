@@ -31,27 +31,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.raywenderlich.android.busso.plugins.whereami.endpoint
 
-import com.raywenderlich.android.busso.conf.BUSSO_SERVER_BASE_URL
-import com.raywenderlich.android.busso.plugins.api.InformationEndpoint
-import com.raywenderlich.android.busso.plugins.model.InfoMessage
-import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
+package com.raywenderlich.android.plugins.engine.ui
 
-/**
- * The interface which abstracts the endpoint for the EverBus applicationø
- */
-interface MyLocationEndpoint : InformationEndpoint {
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.raywenderlich.android.di.scopes.FragmentScope
+import com.raywenderlich.android.plugins.engine.R
+import javax.inject.Inject
 
-  /**
-   * This is the endpoint which returns the list of Bus stop for a given
-   * location and radius
-   */
-  @GET("${BUSSO_SERVER_BASE_URL}myLocation/{lat}/{lng}")
-  override fun fetchInformation(
-    @Path("lat") latitude: Double,
-    @Path("lng") longitude: Double
-  ): Single<InfoMessage>
+/** Implementation for InformationPluginViewBinder */
+@FragmentScope
+class InformationPluginViewBinderImpl @Inject constructor() : InformationPluginViewBinder {
+
+  private lateinit var informationRecyclerView: RecyclerView
+  private lateinit var informationAdapter: InformationListAdapter
+
+  override fun init(rootView: View) {
+    informationRecyclerView = rootView.findViewById(R.id.information_recyclerview)
+    informationAdapter = InformationListAdapter()
+    initRecyclerView(informationRecyclerView)
+  }
+
+
+  private fun initRecyclerView(busStopRecyclerView: RecyclerView) {
+    informationRecyclerView.apply {
+      val viewManager = LinearLayoutManager(busStopRecyclerView.context)
+      layoutManager = viewManager
+      adapter = informationAdapter
+    }
+  }
+
+  override fun displayInformation(informationList: List<String>) {
+    informationAdapter.submitList(informationList)
+  }
 }

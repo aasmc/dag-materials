@@ -32,27 +32,16 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.wether.di
+package com.raywenderlich.android.busso.plugins
 
-import com.raywenderlich.android.busso.plugins.api.ComplexInfoKey
-import com.raywenderlich.android.busso.plugins.api.InformationPluginSpec
-import com.raywenderlich.android.busso.plugins.wether.endpoint.WeatherEndpoint
-import com.raywenderlich.android.di.scopes.ApplicationScope
+import com.raywenderlich.android.busso.plugins.whereami.di.WhereAmIModule
+import com.raywenderlich.android.plugins.weather.di.WeatherModule
 import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoMap
 
-const val WEATHER_INFO_NAME = "Weather"
-
-@Module
-object WeatherModule {
-
-  @Provides
-  @ApplicationScope
-  @IntoMap
-  @ComplexInfoKey( // 1
-    WeatherEndpoint::class,
-    WEATHER_INFO_NAME
-  )
-  fun provideWeatherSpec(): InformationPluginSpec = InformationPluginSpec
-}
+@Module(
+    includes = [
+        WhereAmIModule::class,
+        WeatherModule::class
+    ]
+)
+object InformationSpecsModule

@@ -31,50 +31,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.raywenderlich.android.busso.plugins.ui
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import com.raywenderlich.android.busso.R
+package com.raywenderlich.android.plugins.engine.ui
 
-/**
- * The DiffUtil.ItemCallback for the Information ListAdapter
- */
-val DIFF_UTIL = object : DiffUtil.ItemCallback<String>() {
+import android.view.View
+import com.raywenderlich.android.ui.mvp.Presenter
 
-  override fun areItemsTheSame(
-    oldItem: String,
-    newItem: String
-  ): Boolean {
-    return oldItem == newItem
-  }
+/** Abstraction for the InformationPluginPresenter */
+interface InformationPluginPresenter : Presenter<View, InformationPluginViewBinder> {
 
-  override fun areContentsTheSame(
-    oldItem: String,
-    newItem: String
-  ): Boolean {
-    return oldItem == newItem
-  }
-}
+  fun start()
 
-/**
- * The Adapter for the BusStopList
- */
-class InformationListAdapter :
-  ListAdapter<String, InformationViewHolder>(DIFF_UTIL) {
-
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InformationViewHolder {
-    val itemLayout =
-      LayoutInflater.from(parent.context)
-        .inflate(R.layout.information_list_item_layout, parent, false)
-    return InformationViewHolder(
-      itemLayout
-    )
-  }
-
-  override fun onBindViewHolder(holder: InformationViewHolder, position: Int) {
-    holder.bind(position, getItem(position))
-  }
+  fun stop()
 }

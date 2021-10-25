@@ -41,9 +41,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.raywenderlich.android.busso.R
-import com.raywenderlich.android.busso.plugins.ui.InformationPluginPresenter
-import com.raywenderlich.android.busso.plugins.ui.InformationPluginViewBinder
 import com.raywenderlich.android.busso.ui.view.main.activityComp
+import com.raywenderlich.android.plugins.engine.ui.InformationPluginPresenter
+import com.raywenderlich.android.plugins.engine.ui.InformationPluginViewBinder
 import javax.inject.Inject
 
 /**

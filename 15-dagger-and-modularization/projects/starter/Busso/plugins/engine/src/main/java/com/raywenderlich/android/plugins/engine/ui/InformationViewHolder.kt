@@ -32,10 +32,23 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.api
+package com.raywenderlich.android.plugins.engine.ui
 
-/** Abstraction for the Registry about Information Plugin */
-interface InformationPluginRegistry {
-  /** Returns the registered plugins endpoints */
-  fun plugins(): List<InformationEndpoint>
+import android.view.View
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.raywenderlich.android.plugins.engine.R
+
+/**
+ * The ViewHolder for the info in BusStop screen
+ */
+class InformationViewHolder(
+  itemView: View
+) : RecyclerView.ViewHolder(itemView) {
+
+  private val informationItemTextView: TextView = itemView.findViewById(R.id.information_item)
+
+  fun bind(position: Int, informationMessage: String) {
+    informationItemTextView.text = informationMessage
+  }
 }

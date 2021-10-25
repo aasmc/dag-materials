@@ -32,37 +32,27 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.di
+package com.raywenderlich.android.busso.plugins.whereami.di
 
-import com.raywenderlich.android.busso.plugins.api.InformationPluginRegistry
-import com.raywenderlich.android.busso.plugins.impl.InformationPluginRegistryImpl
-import com.raywenderlich.android.busso.plugins.ui.InformationPluginPresenter
-import com.raywenderlich.android.busso.plugins.ui.InformationPluginPresenterImpl
-import com.raywenderlich.android.busso.plugins.ui.InformationPluginViewBinder
-import com.raywenderlich.android.busso.plugins.ui.InformationPluginViewBinderImpl
-import dagger.Binds
+import com.raywenderlich.android.busso.plugins.whereami.endpoint.MyLocationEndpoint
+import com.raywenderlich.android.di.scopes.ApplicationScope
+import com.raywenderlich.android.plugins.api.ComplexInfoKey
+import com.raywenderlich.android.plugins.api.InformationPluginSpec
 import dagger.Module
+import dagger.Provides
+import dagger.multibindings.IntoMap
 
-interface InformationPluginModule {
+const val WHEREAMI_INFO_NAME = "WhereAmI"
 
-  @Module
-  interface ApplicationBindings {
-    @Binds
-    fun bindInformationPluginRegistry(
-      impl: InformationPluginRegistryImpl
-    ): InformationPluginRegistry
-  }
+@Module
+object WhereAmIModule {
 
-  @Module
-  interface FragmentBindings {
-    @Binds
-    fun bindInformationPluginPresenter(
-      impl: InformationPluginPresenterImpl
-    ): InformationPluginPresenter
-
-    @Binds
-    fun bindInformationPluginViewBinder(
-      impl: InformationPluginViewBinderImpl
-    ): InformationPluginViewBinder
-  }
+  @Provides
+  @ApplicationScope
+  @IntoMap
+  @ComplexInfoKey(
+    MyLocationEndpoint::class,
+    WHEREAMI_INFO_NAME
+  )
+  fun provideWhereAmISpec(): InformationPluginSpec = InformationPluginSpec
 }

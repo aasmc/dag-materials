@@ -72,6 +72,8 @@ dependencies {
     // Navigation utility
     implementation project(path: ':libs:ui:navigation')
     implementation project(path: ':libs:mvp')
+    implementation project(path: ':plugins:whereami')
+    implementation project(path: ':plugins:weather')
 
     // Testing Dependencies
     testImplementation "junit:junit:$junit_version"

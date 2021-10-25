@@ -31,24 +31,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package com.raywenderlich.android.busso.plugins.whereami.endpoint
 
-package com.raywenderlich.android.busso.plugins.ui
+import com.raywenderlich.android.plugins.api.InformationEndpoint
+import com.raywenderlich.android.plugins.model.InfoMessage
+import io.reactivex.Single
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-import android.view.View
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.raywenderlich.android.busso.R
+const val BUSSO_SERVER_BASE_URL = "https://busso-server.herokuapp.com/api/v1/"
 
 /**
- * The ViewHolder for the info in BusStop screen
+ * The interface which abstracts the endpoint for the EverBus applicationø
  */
-class InformationViewHolder(
-  itemView: View
-) : RecyclerView.ViewHolder(itemView) {
+interface MyLocationEndpoint : InformationEndpoint {
 
-  private val informationItemTextView: TextView = itemView.findViewById(R.id.information_item)
-
-  fun bind(position: Int, informationMessage: String) {
-    informationItemTextView.text = informationMessage
-  }
+  /**
+   * This is the endpoint which returns the list of Bus stop for a given
+   * location and radius
+   */
+  @GET("${BUSSO_SERVER_BASE_URL}myLocation/{lat}/{lng}")
+  override fun fetchInformation(
+    @Path("lat") latitude: Double,
+    @Path("lng") longitude: Double
+  ): Single<InfoMessage>
 }

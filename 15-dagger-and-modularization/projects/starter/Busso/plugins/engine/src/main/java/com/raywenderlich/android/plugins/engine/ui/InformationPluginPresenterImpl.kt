@@ -32,15 +32,15 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.ui
+package com.raywenderlich.android.plugins.engine.ui
 
 import android.view.View
-import com.raywenderlich.android.busso.plugins.api.InformationPluginRegistry
 import com.raywenderlich.android.di.scopes.FragmentScope
 import com.raywenderlich.android.location.api.model.LocationData
 import com.raywenderlich.android.location.api.model.LocationEvent
 import com.raywenderlich.android.location.api.model.LocationPermissionGranted
 import com.raywenderlich.android.location.api.model.LocationPermissionRequest
+import com.raywenderlich.android.plugins.api.InformationPluginRegistry
 import com.raywenderlich.android.ui.mvp.impl.BasePresenter
 import io.reactivex.Flowable
 import io.reactivex.Observable

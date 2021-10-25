@@ -32,11 +32,12 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.model
+package com.raywenderlich.android.plugins.api
 
-/**
- * A simple info message class
- */
-data class InfoMessage(
-  val message: String
+import dagger.MapKey
+import kotlin.reflect.KClass
+
+@MapKey // 1
+annotation class SimpleInfoKey(
+  val endpointClass: KClass<*> // 2
 )
