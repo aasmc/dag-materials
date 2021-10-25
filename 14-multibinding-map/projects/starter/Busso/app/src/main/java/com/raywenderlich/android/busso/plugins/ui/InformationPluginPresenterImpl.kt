@@ -58,52 +58,53 @@ class InformationPluginPresenterImpl @Inject constructor(
 ) : BasePresenter<View, InformationPluginViewBinder>(),
     InformationPluginPresenter {
 
-  private val disposables = CompositeDisposable()
+    private val disposables = CompositeDisposable()
 
-  override fun start() {
-    disposables.add(
-        locationObservable.filter(::isLocationEvent)
-            .map { locationEvent ->
-              locationEvent as LocationData
-            }
-            .firstElement()
-            .map { locationData ->
-              val res = informationPluginRegistry.plugins().map { spec ->
-                spec.informationEndpoint.fetchInformation(locationData.location)
-                    .toFlowable()
-              }
-              Flowable
-                  .merge(res)
-                  .collectInto(mutableListOf<String>()) { acc, item ->
-                    acc.add(item.message)
-                  }
-            }
-            .subscribe(::manageResult, ::handleError)
-    )
-  }
-
-  fun manageResult(single: Single<MutableList<String>>) {
-    useViewBinder {
-      single
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe({ messages ->
-            displayInformation(messages)
-          }, ::handleError)
+    override fun start() {
+        disposables.add(
+            locationObservable.filter(::isLocationEvent)
+                .map { locationEvent ->
+                    locationEvent as LocationData
+                }
+                .firstElement()
+                .map { locationData ->
+                    val res = informationPluginRegistry.plugins().map { endpoint ->
+                        val location = locationData.location
+                        endpoint.fetchInformation(location.latitude, location.longitude)
+                            .toFlowable()
+                    }
+                    Flowable
+                        .merge(res)
+                        .collectInto(mutableListOf<String>()) { acc, item ->
+                            acc.add(item.message)
+                        }
+                }
+                .subscribe(::manageResult, ::handleError)
+        )
     }
-  }
 
-  private fun handleError(throwable: Throwable) {
-    useViewBinder {
-      displayInformation(listOf("Error: $throwable"))
+    fun manageResult(single: Single<MutableList<String>>) {
+        useViewBinder {
+            single
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ messages ->
+                    displayInformation(messages)
+                }, ::handleError)
+        }
     }
-  }
 
-  override fun stop() {
-    disposables.clear()
-  }
+    private fun handleError(throwable: Throwable) {
+        useViewBinder {
+            displayInformation(listOf("Error: $throwable"))
+        }
+    }
 
-  private fun isLocationEvent(locationEvent: LocationEvent) =
-      locationEvent !is LocationPermissionRequest &&
-          locationEvent !is LocationPermissionGranted
+    override fun stop() {
+        disposables.clear()
+    }
+
+    private fun isLocationEvent(locationEvent: LocationEvent) =
+        locationEvent !is LocationPermissionRequest &&
+                locationEvent !is LocationPermissionGranted
 }

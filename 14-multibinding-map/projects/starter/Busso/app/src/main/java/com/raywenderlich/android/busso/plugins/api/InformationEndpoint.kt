@@ -41,5 +41,5 @@ import io.reactivex.Single
 /** Tagging interface about an Information endpoint */
 interface InformationEndpoint {
 
-  fun fetchInformation(location: GeoLocation): Single<InfoMessage>
+  fun fetchInformation(latitude: Double, longitude: Double): Single<InfoMessage>
 }
