@@ -32,29 +32,12 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.whereami.di
+package com.raywenderlich.android.busso.plugins.api
 
-import com.raywenderlich.android.busso.di.scopes.ApplicationScope
-import com.raywenderlich.android.busso.plugins.api.InformationPluginSpec
-import com.raywenderlich.android.busso.plugins.api.SimpleInfoKey
-import com.raywenderlich.android.busso.plugins.whereami.endpoint.MyLocationEndpoint
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.ClassKey
-import dagger.multibindings.IntoMap
+import dagger.MapKey
+import kotlin.reflect.KClass
 
-const val WHEREAMI_INFO_NAME = "WhereAmI"
-
-@Module
-object WhereAmIModule {
-
-    @Provides
-    @ApplicationScope
-    @IntoMap
-    @SimpleInfoKey(MyLocationEndpoint::class)
-    fun provideWhereAmISpec(): InformationPluginSpec =
-        object : InformationPluginSpec {
-            override val serviceName: String
-                get() = WHEREAMI_INFO_NAME
-        }
-}
+@MapKey
+annotation class SimpleInfoKey(
+    val endpointClass: KClass<*>
+)

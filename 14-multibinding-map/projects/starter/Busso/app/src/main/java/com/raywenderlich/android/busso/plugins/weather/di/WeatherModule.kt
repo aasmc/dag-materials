@@ -36,6 +36,7 @@ package com.raywenderlich.android.busso.plugins.weather.di
 
 import com.raywenderlich.android.busso.di.scopes.ApplicationScope
 import com.raywenderlich.android.busso.plugins.api.InformationPluginSpec
+import com.raywenderlich.android.busso.plugins.api.SimpleInfoKey
 import com.raywenderlich.android.busso.plugins.weather.endpoint.WeatherEndpoint
 import dagger.Module
 import dagger.Provides
@@ -49,7 +50,7 @@ object WeatherModule {
 
     @Provides
     @IntoMap
-    @ClassKey(WeatherEndpoint::class)
+    @SimpleInfoKey(WeatherEndpoint::class)
     @ApplicationScope
     fun provideWeatherSpec():
             InformationPluginSpec = object : InformationPluginSpec {
