@@ -11,6 +11,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoSet
 import retrofit2.Retrofit
+import javax.inject.Named
 
 const val WEATHER_INFO_NAME = "Weather"
 
@@ -24,8 +25,8 @@ object WeatherModule {
     }
 
     @Provides
-    @IntoSet
     @ApplicationScope
+    @Named(WEATHER_INFO_NAME)
     fun provideWeatherSpec(endpoint: WeatherInformationEndpoint): InformationPluginSpec =
         object : InformationPluginSpec {
             override val informationEndpoint: InformationEndpoint

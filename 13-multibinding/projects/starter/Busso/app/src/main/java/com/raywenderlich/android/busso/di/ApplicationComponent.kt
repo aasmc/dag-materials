@@ -38,6 +38,7 @@ import android.app.Application
 import com.raywenderlich.android.busso.Main
 import com.raywenderlich.android.busso.di.scopes.ApplicationScope
 import com.raywenderlich.android.busso.plugins.di.InformationPluginModule
+import com.raywenderlich.android.busso.plugins.di.InformationSpecsModule
 import com.raywenderlich.android.busso.plugins.weather.di.WeatherModule
 import com.raywenderlich.android.busso.plugins.whereami.di.WhereAmIModule
 import dagger.BindsInstance
@@ -47,8 +48,7 @@ import dagger.Component
     modules = [
         ApplicationModule::class,
         InformationPluginModule.ApplicationBindings::class,
-        WhereAmIModule::class,
-        WeatherModule::class
+        InformationSpecsModule::class
     ]
 )
 @ApplicationScope
