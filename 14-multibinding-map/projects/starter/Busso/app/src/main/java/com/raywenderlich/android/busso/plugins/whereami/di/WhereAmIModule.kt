@@ -35,8 +35,10 @@
 package com.raywenderlich.android.busso.plugins.whereami.di
 
 import com.raywenderlich.android.busso.di.scopes.ApplicationScope
+import com.raywenderlich.android.busso.plugins.api.ComplexInfoKey
 import com.raywenderlich.android.busso.plugins.api.InformationPluginSpec
 import com.raywenderlich.android.busso.plugins.api.SimpleInfoKey
+import com.raywenderlich.android.busso.plugins.weather.di.WEATHER_INFO_NAME
 import com.raywenderlich.android.busso.plugins.whereami.endpoint.MyLocationEndpoint
 import dagger.Module
 import dagger.Provides
@@ -51,10 +53,9 @@ object WhereAmIModule {
     @Provides
     @ApplicationScope
     @IntoMap
-    @SimpleInfoKey(MyLocationEndpoint::class)
-    fun provideWhereAmISpec(): InformationPluginSpec =
-        object : InformationPluginSpec {
-            override val serviceName: String
-                get() = WHEREAMI_INFO_NAME
-        }
+    @ComplexInfoKey(
+        MyLocationEndpoint::class,
+        WHEREAMI_INFO_NAME
+    )
+    fun provideWhereAmISpec(): InformationPluginSpec = InformationPluginSpec
 }

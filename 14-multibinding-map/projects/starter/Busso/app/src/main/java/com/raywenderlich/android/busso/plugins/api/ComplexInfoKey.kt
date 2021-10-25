@@ -32,30 +32,13 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.plugins.weather.di
+package com.raywenderlich.android.busso.plugins.api
 
-import com.raywenderlich.android.busso.di.scopes.ApplicationScope
-import com.raywenderlich.android.busso.plugins.api.ComplexInfoKey
-import com.raywenderlich.android.busso.plugins.api.InformationPluginSpec
-import com.raywenderlich.android.busso.plugins.api.SimpleInfoKey
-import com.raywenderlich.android.busso.plugins.weather.endpoint.WeatherEndpoint
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.ClassKey
-import dagger.multibindings.IntoMap
+import dagger.MapKey
+import kotlin.reflect.KClass
 
-const val WEATHER_INFO_NAME = "Weather"
-
-@Module
-object WeatherModule {
-
-    @Provides
-    @IntoMap
-    @ComplexInfoKey(
-        WeatherEndpoint::class,
-        WEATHER_INFO_NAME
-    )
-    @ApplicationScope
-    fun provideWeatherSpec():
-            InformationPluginSpec = InformationPluginSpec
-}
+@MapKey(unwrapValue = false)
+annotation class ComplexInfoKey(
+    val endpointClass: @JvmSuppressWildcards KClass<out InformationEndpoint>,
+    val name: String
+)

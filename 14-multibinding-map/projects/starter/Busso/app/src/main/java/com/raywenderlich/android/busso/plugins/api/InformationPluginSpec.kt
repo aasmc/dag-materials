@@ -35,7 +35,4 @@
 package com.raywenderlich.android.busso.plugins.api
 
 /** This contains the configuration about the information plugin */
-interface InformationPluginSpec {
-  /** The InformationEndpoint implementation for the service */
-  val serviceName: String
-}
+object InformationPluginSpec

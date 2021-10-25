@@ -35,6 +35,7 @@
 package com.raywenderlich.android.busso.plugins.impl
 
 import com.raywenderlich.android.busso.di.scopes.ApplicationScope
+import com.raywenderlich.android.busso.plugins.api.ComplexInfoKey
 import com.raywenderlich.android.busso.plugins.api.InformationEndpoint
 import com.raywenderlich.android.busso.plugins.api.InformationPluginRegistry
 import com.raywenderlich.android.busso.plugins.api.InformationPluginSpec
@@ -45,10 +46,10 @@ import javax.inject.Inject
 @ApplicationScope
 class InformationPluginRegistryImpl @Inject constructor(
     private val retrofit: Retrofit,
-    informationPlugins: @JvmSuppressWildcards Map<Class<*>, InformationPluginSpec>
+    informationPlugins: @JvmSuppressWildcards Map<ComplexInfoKey, InformationPluginSpec>
 ) : InformationPluginRegistry {
-    val endPoints = informationPlugins.keys.map { clazz ->
-        retrofit.create(clazz)
+    val endPoints = informationPlugins.keys.map { complexKey ->
+        retrofit.create(complexKey.endpointClass.java as Class<*>)
     }.map { endpoint ->
         endpoint as InformationEndpoint
     }.toList()
