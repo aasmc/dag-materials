@@ -35,6 +35,7 @@
 package com.raywenderlich.android.busso.di
 
 import com.raywenderlich.android.busso.network.NetworkModule
+import com.raywenderlich.android.location.rx.di.LocationModule
 import dagger.Module
 
 @Module(
