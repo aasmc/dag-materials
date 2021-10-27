@@ -43,10 +43,11 @@ import com.raywenderlich.android.busso.ui.view.main.MainActivity
 import com.raywenderlich.android.ui.navigation.ActivityIntentDestination
 import com.raywenderlich.android.ui.navigation.Navigator
 import javax.inject.Inject
+import javax.inject.Named
 
 /** The ViewBinder implementation for the SplashActivity */
 class SplashViewBinderImpl @Inject constructor(
-  private val navigator: Navigator
+  @Named("Splash") private val navigator: Navigator
 ) : SplashViewBinder {
 
   companion object {

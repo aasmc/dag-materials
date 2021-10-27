@@ -40,7 +40,7 @@ import androidx.appcompat.app.AppCompatActivity
 /**
  * Implementation of a Navigator for Activities
  */
-internal class NavigatorImpl(private val activity: Activity) : Navigator {
+class NavigatorImpl(private val activity: Activity) : Navigator {
   override fun navigateTo(destination: Destination, params: Bundle?) {
     when (destination) {
       is ActivityIntentDestination -> {

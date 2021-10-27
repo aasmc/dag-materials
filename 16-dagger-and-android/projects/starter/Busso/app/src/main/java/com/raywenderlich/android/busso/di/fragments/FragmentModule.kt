@@ -32,31 +32,37 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.di
+package com.raywenderlich.android.busso.di.fragments
 
-import com.raywenderlich.android.busso.ui.view.main.MainPresenter
-import com.raywenderlich.android.busso.ui.view.main.MainPresenterImpl
-import com.raywenderlich.android.busso.ui.view.splash.SplashPresenter
-import com.raywenderlich.android.busso.ui.view.splash.SplashPresenterImpl
-import com.raywenderlich.android.busso.ui.view.splash.SplashViewBinder
-import com.raywenderlich.android.busso.ui.view.splash.SplashViewBinderImpl
-import com.raywenderlich.android.ui.navigation.di.NavigationModule
+import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalPresenter
+import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalPresenterImpl
+import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalViewBinder
+import com.raywenderlich.android.busso.ui.view.busarrival.BusArrivalViewBinderImpl
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListPresenter
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListPresenterImpl
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListViewBinder
+import com.raywenderlich.android.busso.ui.view.busstop.BusStopListViewBinderImpl
+import com.raywenderlich.android.plugins.engine.di.InformationPluginEngineModule
 import dagger.Binds
 import dagger.Module
 
 @Module(
-  includes = [
-    NavigationModule::class
-  ]
+    includes = [InformationPluginEngineModule.FragmentBindings::class]
 )
-interface ActivityModule {
+interface FragmentModule {
 
-  @Binds
-  fun bindSplashPresenter(impl: SplashPresenterImpl): SplashPresenter
+    @Binds
+    fun bindBusStopListViewBinder(impl: BusStopListViewBinderImpl): BusStopListViewBinder
 
-  @Binds
-  fun bindSplashViewBinder(impl: SplashViewBinderImpl): SplashViewBinder
+    @Binds
+    fun bindBusStopListPresenter(impl: BusStopListPresenterImpl): BusStopListPresenter
 
-  @Binds
-  fun bindMainPresenter(impl: MainPresenterImpl): MainPresenter
+    @Binds
+    fun bindBusStopListViewBinderListener(impl: BusStopListPresenterImpl): BusStopListViewBinder.BusStopItemSelectedListener
+
+    @Binds
+    fun bindBusArrivalPresenter(impl: BusArrivalPresenterImpl): BusArrivalPresenter
+
+    @Binds
+    fun bindBusArrivalViewBinder(impl: BusArrivalViewBinderImpl): BusArrivalViewBinder
 }

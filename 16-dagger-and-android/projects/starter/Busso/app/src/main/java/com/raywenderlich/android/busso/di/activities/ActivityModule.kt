@@ -32,33 +32,32 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.busso.di
+package com.raywenderlich.android.busso.di.activities
 
-import android.app.Activity
-import com.raywenderlich.android.busso.ui.view.main.MainActivity
-import com.raywenderlich.android.busso.ui.view.splash.SplashActivity
-import com.raywenderlich.android.di.scopes.ActivityScope
-import dagger.BindsInstance
-import dagger.Subcomponent
+import com.raywenderlich.android.busso.di.navigator.NavigatorModule
+import com.raywenderlich.android.busso.ui.view.main.MainPresenter
+import com.raywenderlich.android.busso.ui.view.main.MainPresenterImpl
+import com.raywenderlich.android.busso.ui.view.splash.SplashPresenter
+import com.raywenderlich.android.busso.ui.view.splash.SplashPresenterImpl
+import com.raywenderlich.android.busso.ui.view.splash.SplashViewBinder
+import com.raywenderlich.android.busso.ui.view.splash.SplashViewBinderImpl
+import com.raywenderlich.android.ui.navigation.di.NavigationModule
+import dagger.Binds
+import dagger.Module
 
-@Subcomponent(
-  modules = [ActivityModule::class]
+@Module(
+  includes = [
+    NavigatorModule::class
+  ]
 )
-@ActivityScope
-interface ActivityComponent {
+interface ActivityModule {
 
-  fun inject(activity: SplashActivity)
+  @Binds
+  fun bindSplashPresenter(impl: SplashPresenterImpl): SplashPresenter
 
-  fun inject(activity: MainActivity)
+  @Binds
+  fun bindSplashViewBinder(impl: SplashViewBinderImpl): SplashViewBinder
 
-  fun fragmentComponent(): FragmentComponent
-
-  @Subcomponent.Builder
-  interface Builder {
-    fun activity(
-      @BindsInstance activity: Activity
-    ): Builder
-
-    fun build(): ActivityComponent
-  }
+  @Binds
+  fun bindMainPresenter(impl: MainPresenterImpl): MainPresenter
 }

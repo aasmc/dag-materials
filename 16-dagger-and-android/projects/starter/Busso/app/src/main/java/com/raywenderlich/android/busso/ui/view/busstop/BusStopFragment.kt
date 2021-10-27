@@ -41,9 +41,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.raywenderlich.android.busso.R
-import com.raywenderlich.android.busso.ui.view.main.activityComp
 import com.raywenderlich.android.plugins.engine.ui.InformationPluginPresenter
 import com.raywenderlich.android.plugins.engine.ui.InformationPluginViewBinder
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 /**
@@ -51,56 +53,54 @@ import javax.inject.Inject
  */
 class BusStopFragment : Fragment() {
 
-  @Inject
-  lateinit var busStopListViewBinder: BusStopListViewBinder
+    @Inject
+    lateinit var busStopListViewBinder: BusStopListViewBinder
 
-  @Inject
-  lateinit var busStopListPresenter: BusStopListPresenter
+    @Inject
+    lateinit var busStopListPresenter: BusStopListPresenter
 
-  @Inject
-  lateinit var informationViewBinder: InformationPluginViewBinder
+    @Inject
+    lateinit var informationViewBinder: InformationPluginViewBinder
 
-  @Inject
-  lateinit var informationPresenter: InformationPluginPresenter
+    @Inject
+    lateinit var informationPresenter: InformationPluginPresenter
 
-  override fun onAttach(context: Context) {
-    context.activityComp
-      .fragmentComponent()
-      .inject(this)
-    super.onAttach(context)
-  }
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? = inflater.inflate(R.layout.fragment_busstop_layout, container, false).apply {
-    busStopListViewBinder.init(this)
-    informationViewBinder.init(this)
-  }
-
-
-  override fun onStart() {
-    super.onStart()
-    with(busStopListPresenter) {
-      bind(busStopListViewBinder)
-      start()
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
-    with(informationPresenter) {
-      bind(informationViewBinder)
-      start()
-    }
-  }
 
-  override fun onStop() {
-    with(busStopListPresenter) {
-      stop()
-      unbind()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.fragment_busstop_layout, container, false).apply {
+        busStopListViewBinder.init(this)
+        informationViewBinder.init(this)
     }
-    with(informationPresenter) {
-      stop()
-      unbind()
+
+
+    override fun onStart() {
+        super.onStart()
+        with(busStopListPresenter) {
+            bind(busStopListViewBinder)
+            start()
+        }
+        with(informationPresenter) {
+            bind(informationViewBinder)
+            start()
+        }
     }
-    super.onStop()
-  }
+
+    override fun onStop() {
+        with(busStopListPresenter) {
+            stop()
+            unbind()
+        }
+        with(informationPresenter) {
+            stop()
+            unbind()
+        }
+        super.onStop()
+    }
 }

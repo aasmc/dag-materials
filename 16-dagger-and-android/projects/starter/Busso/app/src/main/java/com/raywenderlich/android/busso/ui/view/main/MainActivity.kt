@@ -33,36 +33,34 @@
  */
 package com.raywenderlich.android.busso.ui.view.main
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.busso.R
-import com.raywenderlich.android.busso.appComp
-import com.raywenderlich.android.busso.di.ActivityComponent
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HasAndroidInjector {
 
-  @Inject
-  lateinit var mainPresenter: MainPresenter
+    @Inject
+    lateinit var mainPresenter: MainPresenter
 
-  lateinit var comp: ActivityComponent
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
-    comp = application.appComp
-      .activityComponentBuilder()
-      .activity(this)
-      .build()
-      .apply {
-        inject(this@MainActivity)
-      }
-    if (savedInstanceState == null) {
-      mainPresenter.goToBusStopList()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        if (savedInstanceState == null) {
+            mainPresenter.goToBusStopList()
+        }
     }
-  }
+
+    override fun androidInjector(): AndroidInjector<Any> {
+        return androidInjector
+    }
 }
 
-val Context.activityComp: ActivityComponent
-  get() = (this as MainActivity).comp

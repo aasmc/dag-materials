@@ -37,11 +37,13 @@ package com.raywenderlich.android.busso.di
 import com.raywenderlich.android.busso.network.NetworkModule
 import com.raywenderlich.android.location.di.LocationModule
 import dagger.Module
+import dagger.android.support.AndroidSupportInjectionModule
 
 @Module(
-  includes = [
-    LocationModule::class,
-    NetworkModule::class
-  ]
+    includes = [
+        LocationModule::class,
+        NetworkModule::class,
+        AndroidSupportInjectionModule::class
+    ]
 )
 object ApplicationModule
