@@ -34,31 +34,17 @@
 
 package com.raywenderlich.android.busso
 
-import android.app.Application
-import android.content.Context
 import com.raywenderlich.android.busso.conf.BussoConfiguration
-import com.raywenderlich.android.busso.di.ApplicationComponent
 import com.raywenderlich.android.busso.di.DaggerApplicationComponent
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import javax.inject.Inject
+import dagger.android.DaggerApplication
 
-class Main : Application(), HasAndroidInjector {
+class Main : DaggerApplication() {
 
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
-
-    override fun onCreate() {
-        super.onCreate()
-        DaggerApplicationComponent
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerApplicationComponent
             .factory()
             .create(this, BussoConfiguration)
-            .inject(this)
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> {
-        return dispatchingAndroidInjector
     }
 }
 

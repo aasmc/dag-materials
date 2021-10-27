@@ -34,21 +34,15 @@
 package com.raywenderlich.android.busso.ui.view.main
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.busso.R
 import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
+import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasAndroidInjector {
+class MainActivity : DaggerAppCompatActivity() {
 
     @Inject
     lateinit var mainPresenter: MainPresenter
-
-    @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -57,10 +51,6 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         if (savedInstanceState == null) {
             mainPresenter.goToBusStopList()
         }
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> {
-        return androidInjector
     }
 }
 

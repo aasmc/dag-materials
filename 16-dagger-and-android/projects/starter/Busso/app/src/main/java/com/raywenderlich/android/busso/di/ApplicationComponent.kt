@@ -36,14 +36,13 @@ package com.raywenderlich.android.busso.di
 
 import android.app.Application
 import com.raywenderlich.android.busso.Main
-import com.raywenderlich.android.busso.di.activities.main.MainActivityModule
-import com.raywenderlich.android.busso.di.activities.splash.SplashActivityModule
 import com.raywenderlich.android.busso.plugins.InformationSpecsModule
 import com.raywenderlich.android.di.scopes.ApplicationScope
 import com.raywenderlich.android.network.NetworkingConfiguration
 import com.raywenderlich.android.plugins.engine.di.InformationPluginEngineModule
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjector
 
 @Component(
     dependencies = [NetworkingConfiguration::class],
@@ -51,14 +50,11 @@ import dagger.Component
         ApplicationModule::class,
         InformationPluginEngineModule::class,
         InformationSpecsModule::class,
-        MainActivityModule::class,
-        SplashActivityModule::class
+        ActivityBindingModule::class
     ]
 )
 @ApplicationScope
-interface ApplicationComponent {
-
-    fun inject(main: Main)
+interface ApplicationComponent : AndroidInjector<Main> {
 
     @Component.Factory
     interface Factory {
