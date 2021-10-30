@@ -47,7 +47,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module(
     includes = [
-        LocationModule::class,
+        LocationModule.ApplicationBindings::class,
         NetworkModule::class,
         AndroidSupportInjectionModule::class,
         InformationPluginEngineModule::class

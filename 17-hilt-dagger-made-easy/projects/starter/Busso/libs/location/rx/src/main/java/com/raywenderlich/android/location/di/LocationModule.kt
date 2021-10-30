@@ -43,24 +43,41 @@ import com.raywenderlich.android.location.api.permissions.GeoLocationPermissionC
 import com.raywenderlich.android.location.rx.provideRxLocationObservable
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ActivityScoped
 import io.reactivex.Observable
 import javax.inject.Singleton
 
-@Module
 class LocationModule {
-  @Singleton
-  @Provides
-  fun provideLocationManager(application: Application): LocationManager =
-    application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-  @Singleton
-  @Provides
-  fun providePermissionChecker(application: Application): GeoLocationPermissionChecker =
-    GeoLocationPermissionCheckerImpl(application)
+    @Module
+    object ApplicationBindings {
 
-  @Provides
-  fun provideLocationObservable(
-    locationManager: LocationManager,
-    permissionChecker: GeoLocationPermissionChecker
-  ): Observable<LocationEvent> = provideRxLocationObservable(locationManager, permissionChecker)
+        @Singleton
+        @Provides
+        fun provideLocationManager(
+            @ApplicationContext context: Context
+        ): LocationManager =
+            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+
+    @Module
+    object ActivityBindings {
+
+        @ActivityScoped
+        @Provides
+        fun providePermissionChecker(
+            @ActivityContext context: Context
+        ): GeoLocationPermissionChecker =
+            GeoLocationPermissionCheckerImpl(context)
+
+        @ActivityScoped
+        @Provides
+        fun provideLocationObservable(
+            locationManager: LocationManager,
+            permissionChecker: GeoLocationPermissionChecker
+        ): Observable<LocationEvent> = provideRxLocationObservable(locationManager, permissionChecker)
+
+    }
 }
