@@ -34,7 +34,6 @@
 
 package com.raywenderlich.android.plugins.engine.di
 
-import com.raywenderlich.android.di.scopes.ApplicationScope
 import com.raywenderlich.android.plugins.api.ComplexInfoKey
 import com.raywenderlich.android.plugins.api.InformationPluginRegistry
 import com.raywenderlich.android.plugins.api.InformationPluginSpec
@@ -47,12 +46,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
 @Module
 object InformationPluginEngineModule {
 
   @Provides
-  @ApplicationScope
+  @Singleton
   fun provideInformationPluginRegistry(
     retrofit: Retrofit,
     informationPlugins: @JvmSuppressWildcards Map<ComplexInfoKey, InformationPluginSpec>

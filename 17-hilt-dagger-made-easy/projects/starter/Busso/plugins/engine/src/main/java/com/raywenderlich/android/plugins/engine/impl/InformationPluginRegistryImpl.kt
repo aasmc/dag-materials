@@ -34,16 +34,16 @@
 
 package com.raywenderlich.android.plugins.engine.impl
 
-import com.raywenderlich.android.di.scopes.ApplicationScope
 import com.raywenderlich.android.plugins.api.ComplexInfoKey
 import com.raywenderlich.android.plugins.api.InformationEndpoint
 import com.raywenderlich.android.plugins.api.InformationPluginRegistry
 import com.raywenderlich.android.plugins.api.InformationPluginSpec
 import retrofit2.Retrofit
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /** Implementation for the InformationPluginRegistry */
-@ApplicationScope
+@Singleton
 internal class InformationPluginRegistryImpl @Inject constructor(
   private val retrofit: Retrofit,
   informationPlugins: @JvmSuppressWildcards Map<ComplexInfoKey, InformationPluginSpec>

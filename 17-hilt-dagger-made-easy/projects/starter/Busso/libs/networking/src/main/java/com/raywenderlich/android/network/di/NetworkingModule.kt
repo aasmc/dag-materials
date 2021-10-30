@@ -36,7 +36,6 @@ package com.raywenderlich.android.network.di
 
 import android.app.Application
 import com.google.gson.GsonBuilder
-import com.raywenderlich.android.di.scopes.ApplicationScope
 import com.raywenderlich.android.network.NetworkingConfiguration
 import dagger.Module
 import dagger.Provides
@@ -45,13 +44,14 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 /** Dagger Module for Networking */
 @Module
 object NetworkingModule {
 
   @Provides
-  @ApplicationScope
+  @Singleton
   fun provideCache(
     networkingConfiguration: NetworkingConfiguration,
     application: Application
@@ -62,14 +62,14 @@ object NetworkingModule {
     )
 
   @Provides
-  @ApplicationScope
+  @Singleton
   fun provideHttpClient(cache: Cache): OkHttpClient =
     OkHttpClient.Builder()
       .cache(cache)
       .build()
 
   @Provides
-  @ApplicationScope
+  @Singleton
   fun provideRetrofit(
     networkingConfiguration: NetworkingConfiguration,
     httpClient: OkHttpClient

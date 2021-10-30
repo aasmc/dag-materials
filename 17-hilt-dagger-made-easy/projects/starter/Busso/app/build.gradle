@@ -2,6 +2,7 @@ plugins {
   id 'com.android.application'
   id 'kotlin-android'
   id "kotlin-kapt"
+  id "dagger.hilt.android.plugin"
 }
 apply from: '../versions.gradle'
 
@@ -55,6 +56,10 @@ dependencies {
   implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
   implementation "com.squareup.retrofit2:converter-gson:$retrofit_gson_converter_version"
   implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_rx2_adapter_version"
+
+  // hilt dependencies
+  implementation "com.google.dagger:hilt-android:$hilt_version"
+  kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
   // Auto value
   implementation "com.google.auto.value:auto-value-annotations:$autovalue_annotation_version"

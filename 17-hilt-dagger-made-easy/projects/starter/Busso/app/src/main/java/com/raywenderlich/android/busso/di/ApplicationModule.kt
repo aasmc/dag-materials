@@ -34,16 +34,27 @@
 
 package com.raywenderlich.android.busso.di
 
+import com.raywenderlich.android.busso.conf.BussoConfiguration
 import com.raywenderlich.android.busso.network.NetworkModule
 import com.raywenderlich.android.location.di.LocationModule
+import com.raywenderlich.android.network.NetworkingConfiguration
 import dagger.Module
+import dagger.Provides
 import dagger.android.support.AndroidSupportInjectionModule
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 @Module(
-  includes = [
-    LocationModule::class,
-    NetworkModule::class,
-    AndroidSupportInjectionModule::class
-  ]
+    includes = [
+        LocationModule::class,
+        NetworkModule::class,
+        AndroidSupportInjectionModule::class
+    ]
 )
-object ApplicationModule
+@InstallIn(SingletonComponent::class)
+object ApplicationModule {
+
+    @Provides
+    fun provideNetworkingConfiguration(): NetworkingConfiguration =
+        BussoConfiguration
+}

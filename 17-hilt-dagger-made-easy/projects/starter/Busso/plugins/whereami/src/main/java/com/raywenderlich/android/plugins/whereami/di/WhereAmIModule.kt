@@ -35,12 +35,12 @@
 package com.raywenderlich.android.plugins.whereami.di
 
 import com.raywenderlich.android.plugins.whereami.endpoint.MyLocationEndpoint
-import com.raywenderlich.android.di.scopes.ApplicationScope
 import com.raywenderlich.android.plugins.api.ComplexInfoKey
 import com.raywenderlich.android.plugins.api.InformationPluginSpec
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
+import javax.inject.Singleton
 
 const val WHEREAMI_INFO_NAME = "WhereAmI"
 
@@ -48,7 +48,7 @@ const val WHEREAMI_INFO_NAME = "WhereAmI"
 object WhereAmIModule {
 
   @Provides
-  @ApplicationScope
+  @Singleton
   @IntoMap
   @ComplexInfoKey(
     MyLocationEndpoint::class,

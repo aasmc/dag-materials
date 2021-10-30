@@ -34,16 +34,8 @@
 
 package com.raywenderlich.android.busso
 
-import com.raywenderlich.android.busso.conf.BussoConfiguration
-import com.raywenderlich.android.busso.di.DaggerApplicationComponent
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import android.app.Application
+import dagger.hilt.android.AndroidEntryPoint
 
-class Main : DaggerApplication() {
-
-  override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-    return DaggerApplicationComponent
-      .factory()
-      .create(this, BussoConfiguration)
-  }
-}
+@AndroidEntryPoint
+class Main : Application()

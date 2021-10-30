@@ -35,12 +35,12 @@
 package com.raywenderlich.android.plugins.weather.di
 
 import com.raywenderlich.android.plugins.weather.endpoint.WeatherEndpoint
-import com.raywenderlich.android.di.scopes.ApplicationScope
 import com.raywenderlich.android.plugins.api.ComplexInfoKey
 import com.raywenderlich.android.plugins.api.InformationPluginSpec
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
+import javax.inject.Singleton
 
 const val WEATHER_INFO_NAME = "Weather"
 
@@ -48,7 +48,7 @@ const val WEATHER_INFO_NAME = "Weather"
 object WeatherModule {
 
   @Provides
-  @ApplicationScope
+  @Singleton
   @IntoMap
   @ComplexInfoKey(
     WeatherEndpoint::class,

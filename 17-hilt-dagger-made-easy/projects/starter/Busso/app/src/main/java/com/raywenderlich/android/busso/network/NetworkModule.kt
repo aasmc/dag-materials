@@ -34,11 +34,11 @@
 
 package com.raywenderlich.android.busso.network
 
-import com.raywenderlich.android.di.scopes.ApplicationScope
 import com.raywenderlich.android.network.di.NetworkingModule
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
 @Module(
   includes = [
@@ -48,7 +48,7 @@ import retrofit2.Retrofit
 object NetworkModule {
 
   @Provides
-  @ApplicationScope
+  @Singleton
   fun provideBussoEndPoint(retrofit: Retrofit): BussoEndpoint {
     return retrofit.create(BussoEndpoint::class.java)
   }
