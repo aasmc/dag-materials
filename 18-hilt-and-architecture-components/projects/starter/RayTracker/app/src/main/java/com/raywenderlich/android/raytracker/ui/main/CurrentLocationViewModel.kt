@@ -43,11 +43,14 @@ import com.raywenderlich.android.raytracker.repository.contentprovider.TrackData
 import com.raywenderlich.android.raytracker.repository.entity.TrackData
 import com.raywenderlich.android.raytracker.state.TrackerState
 import com.raywenderlich.android.raytracker.state.TrackerStateManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Inject
 
 /** The ViewModel for the MainActivity */
 @ExperimentalCoroutinesApi
-class CurrentLocationViewModel(
+@HiltViewModel
+class CurrentLocationViewModel @Inject constructor (
     application: Application,
     private val trackerStateManager: TrackerStateManager,
     private val trackDataHelper: TrackDataHelper
