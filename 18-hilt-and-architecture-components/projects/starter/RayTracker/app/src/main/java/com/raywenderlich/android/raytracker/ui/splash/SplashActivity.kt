@@ -58,6 +58,7 @@ class SplashActivity : AppCompatActivity() {
       grantResults: IntArray
   ) {
     locationPermissionHelper.handlePermissionsResult(requestCode, grantResults)
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
   }
 
   private fun makeFullScreen() {

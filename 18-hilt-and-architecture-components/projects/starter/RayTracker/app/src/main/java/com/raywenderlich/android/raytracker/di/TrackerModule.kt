@@ -45,8 +45,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.components.ServiceComponent
+import dagger.hilt.components.SingletonComponent
 
 interface TrackerModule {
 
@@ -70,7 +70,7 @@ interface TrackerModule {
   }
 
   @Module
-  @InstallIn(ApplicationComponent::class)
+  @InstallIn(SingletonComponent::class)
   interface ApplicationBindings {
     @Binds
     fun bindTrackerStateManager(

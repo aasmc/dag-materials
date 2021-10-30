@@ -37,12 +37,12 @@ package com.raywenderlich.android.raytracker.di
 import com.raywenderlich.android.location.di.AndroidLocationModule
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 
 @Module(
     includes = [
       AndroidLocationModule.ApplicationBindings::class
     ]
 )
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object ApplicationModule

@@ -45,91 +45,109 @@ import com.raywenderlich.android.raytracker.conf.Config
 import com.raywenderlich.android.raytracker.repository.dao.TrackDao
 import com.raywenderlich.android.raytracker.repository.db.TrackDatabase
 import com.raywenderlich.android.raytracker.repository.util.toTrackData
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import java.lang.IllegalStateException
 import kotlin.coroutines.CoroutineContext
 
 class RayTrackContentProvider : ContentProvider(), CoroutineScope {
 
-  companion object {
-    private const val TRACK_DIR_INDICATOR = 1
-    private const val TRACK_ITEM_INDICATOR = 2
-    private val URI_MATCHER = UriMatcher(UriMatcher.NO_MATCH).apply {
-      addURI(TrackDBMetadata.AUTHORITY, TrackDBMetadata.TrackData.PATH, TRACK_DIR_INDICATOR)
-      addURI(TrackDBMetadata.AUTHORITY, "${TrackDBMetadata.TrackData.PATH}/#", TRACK_ITEM_INDICATOR)
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface ContentProviderEntryPoint {
+        fun trackDatabase(): TrackDatabase
     }
-  }
 
-  private lateinit var trackDatabase: TrackDatabase
-  private lateinit var trackDao: TrackDao
-
-  override fun onCreate(): Boolean {
-    trackDatabase = getRoomDatabase()
-    trackDao = trackDatabase.trackDao()
-    return true
-  }
-
-  override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-    // We just support delete everything
-    var deleted: Int
-    runBlocking {
-      deleted = trackDao.deleteAll()
-      context?.contentResolver?.notifyChange(uri, null)
+    companion object {
+        private const val TRACK_DIR_INDICATOR = 1
+        private const val TRACK_ITEM_INDICATOR = 2
+        private val URI_MATCHER = UriMatcher(UriMatcher.NO_MATCH).apply {
+            addURI(TrackDBMetadata.AUTHORITY, TrackDBMetadata.TrackData.PATH, TRACK_DIR_INDICATOR)
+            addURI(
+                TrackDBMetadata.AUTHORITY,
+                "${TrackDBMetadata.TrackData.PATH}/#",
+                TRACK_ITEM_INDICATOR
+            )
+        }
     }
-    return deleted
-  }
 
-  override fun getType(uri: Uri): String = when (URI_MATCHER.match(uri)) {
-    TRACK_DIR_INDICATOR -> TrackDBMetadata.TrackData.MIME_TYPE_DIR
-    TRACK_ITEM_INDICATOR -> TrackDBMetadata.TrackData.MIME_TYPE_ITEM
-    else -> throw IllegalArgumentException("$uri not valid")
-  }
+    private lateinit var trackDatabase: TrackDatabase
+    private lateinit var trackDao: TrackDao
 
-  override fun insert(uri: Uri, values: ContentValues?): Uri? {
-    if (URI_MATCHER.match(uri) != TRACK_DIR_INDICATOR) {
-      throw IllegalArgumentException("You can only add items using the DIR mime type")
+    override fun onCreate(): Boolean {
+        trackDatabase = getRoomDatabase()
+        trackDao = trackDatabase.trackDao()
+        return true
     }
-    var returnUri: Uri? = null
-    values?.toTrackData()?.let { newTrackData ->
-      runBlocking {
-        val newId = trackDao.insert(newTrackData)
-        returnUri = ContentUris.withAppendedId(
-            TrackDBMetadata.TrackData.CONTENT_URI,
-            newId
-        )
-        context?.contentResolver?.notifyChange(returnUri!!, null)
-      }
+
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
+        // We just support delete everything
+        var deleted: Int
+        runBlocking {
+            deleted = trackDao.deleteAll()
+            context?.contentResolver?.notifyChange(uri, null)
+        }
+        return deleted
     }
-    return returnUri
-  }
 
-  override fun query(
-      uri: Uri, projection: Array<String>?, selection: String?,
-      selectionArgs: Array<String>?, sortOrder: String?
-  ): Cursor? {
-    var queryCursor: TrackCursor
-    // You only support getting all the items
-    runBlocking {
-      queryCursor = TrackCursor(trackDao.list())
+    override fun getType(uri: Uri): String = when (URI_MATCHER.match(uri)) {
+        TRACK_DIR_INDICATOR -> TrackDBMetadata.TrackData.MIME_TYPE_DIR
+        TRACK_ITEM_INDICATOR -> TrackDBMetadata.TrackData.MIME_TYPE_ITEM
+        else -> throw IllegalArgumentException("$uri not valid")
     }
-    return queryCursor
-  }
 
-  override fun update(
-      uri: Uri, values: ContentValues?, selection: String?,
-      selectionArgs: Array<String>?
-  ): Int {
-    throw UnsupportedOperationException("You don't need to update")
-  }
+    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+        if (URI_MATCHER.match(uri) != TRACK_DIR_INDICATOR) {
+            throw IllegalArgumentException("You can only add items using the DIR mime type")
+        }
+        var returnUri: Uri? = null
+        values?.toTrackData()?.let { newTrackData ->
+            runBlocking {
+                val newId = trackDao.insert(newTrackData)
+                returnUri = ContentUris.withAppendedId(
+                    TrackDBMetadata.TrackData.CONTENT_URI,
+                    newId
+                )
+                context?.contentResolver?.notifyChange(returnUri!!, null)
+            }
+        }
+        return returnUri
+    }
 
-  private fun getRoomDatabase(): TrackDatabase =
-      Room.databaseBuilder(
-          context!!,
-          TrackDatabase::class.java,
-          Config.DB.DB_NAME
-      ).fallbackToDestructiveMigration().build()
+    override fun query(
+        uri: Uri, projection: Array<String>?, selection: String?,
+        selectionArgs: Array<String>?, sortOrder: String?
+    ): Cursor? {
+        var queryCursor: TrackCursor
+        // You only support getting all the items
+        runBlocking {
+            queryCursor = TrackCursor(trackDao.list())
+        }
+        return queryCursor
+    }
 
-  override val coroutineContext: CoroutineContext
-    get() = Dispatchers.IO
+    override fun update(
+        uri: Uri, values: ContentValues?, selection: String?,
+        selectionArgs: Array<String>?
+    ): Int {
+        throw UnsupportedOperationException("You don't need to update")
+    }
+
+    private fun getRoomDatabase(): TrackDatabase {
+        val appContext = context?.applicationContext ?: throw IllegalStateException()
+        val hiltEntryPoint =
+            EntryPointAccessors.fromApplication(
+                appContext,
+                ContentProviderEntryPoint::class.java
+            )
+        return hiltEntryPoint.trackDatabase()
+    }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO
 }

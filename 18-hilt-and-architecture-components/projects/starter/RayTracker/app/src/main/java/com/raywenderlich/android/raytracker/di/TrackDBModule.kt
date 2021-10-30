@@ -34,24 +34,40 @@
 
 package com.raywenderlich.android.raytracker.di
 
+import android.content.Context
+import androidx.room.Room
+import com.raywenderlich.android.raytracker.conf.Config
 import com.raywenderlich.android.raytracker.repository.contentprovider.TrackDataHelper
 import com.raywenderlich.android.raytracker.repository.contentprovider.TrackDataHelperImpl
+import com.raywenderlich.android.raytracker.repository.db.TrackDatabase
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object TrackDBModule {
 
-  @Module
-  @InstallIn(ApplicationComponent::class)
-  interface Bindings {
+    @Provides
+    fun provideTrackDatabase(
+        @ApplicationContext context: Context
+    ): TrackDatabase =
+        Room.databaseBuilder(
+            context,
+            TrackDatabase::class.java,
+            Config.DB.DB_NAME
+        ).build()
 
-    @Binds
-    fun bind(
-        impl: TrackDataHelperImpl
-    ): TrackDataHelper
-  }
+    @Module
+    @InstallIn(SingletonComponent::class)
+    interface Bindings {
+
+        @Binds
+        fun bind(
+            impl: TrackDataHelperImpl
+        ): TrackDataHelper
+    }
 }
