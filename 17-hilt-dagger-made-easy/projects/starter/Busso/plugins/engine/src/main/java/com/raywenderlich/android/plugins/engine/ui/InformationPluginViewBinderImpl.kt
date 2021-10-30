@@ -37,12 +37,12 @@ package com.raywenderlich.android.plugins.engine.ui
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.raywenderlich.android.di.scopes.FragmentScope
 import com.raywenderlich.android.plugins.engine.R
+import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 /** Implementation for InformationPluginViewBinder */
-@FragmentScope
+@FragmentScoped
 class InformationPluginViewBinderImpl @Inject constructor() : InformationPluginViewBinder {
 
   private lateinit var informationRecyclerView: RecyclerView

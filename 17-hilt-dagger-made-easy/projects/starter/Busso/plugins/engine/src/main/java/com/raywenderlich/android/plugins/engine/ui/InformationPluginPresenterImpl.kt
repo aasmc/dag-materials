@@ -35,13 +35,13 @@
 package com.raywenderlich.android.plugins.engine.ui
 
 import android.view.View
-import com.raywenderlich.android.di.scopes.FragmentScope
 import com.raywenderlich.android.location.api.model.LocationData
 import com.raywenderlich.android.location.api.model.LocationEvent
 import com.raywenderlich.android.location.api.model.LocationPermissionGranted
 import com.raywenderlich.android.location.api.model.LocationPermissionRequest
 import com.raywenderlich.android.ui.mvp.impl.BasePresenter
 import com.raywenderlich.android.plugins.api.InformationPluginRegistry
+import dagger.hilt.android.scopes.FragmentScoped
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -51,7 +51,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /** The InformationPluginPresenter implementation */
-@FragmentScope
+@FragmentScoped
 class InformationPluginPresenterImpl @Inject constructor(
   private val informationPluginRegistry: InformationPluginRegistry,
   private val locationObservable: Observable<LocationEvent>

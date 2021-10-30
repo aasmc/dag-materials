@@ -35,16 +35,16 @@
 package com.raywenderlich.android.ui.navigation.di
 
 import android.app.Activity
-import com.raywenderlich.android.di.scopes.ActivityScope
 import com.raywenderlich.android.ui.navigation.Navigator
 import com.raywenderlich.android.ui.navigation.NavigatorImpl
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.android.scopes.ActivityScoped
 
 @Module
 object NavigationModule {
   @Provides
-  @ActivityScope
+  @ActivityScoped
   fun provideNavigator(activity: Activity): Navigator =
     NavigatorImpl(activity)
 }

@@ -34,11 +34,14 @@
 package com.raywenderlich.android.busso.ui.view.main
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.busso.R
 import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
   @Inject
   lateinit var mainPresenter: MainPresenter

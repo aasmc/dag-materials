@@ -42,11 +42,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.raywenderlich.android.busso.R
 import dagger.android.support.AndroidSupportInjection
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * The Fragment for displaying the arrival time
  */
+@AndroidEntryPoint
 class BusArrivalFragment : Fragment() {
 
   @Inject
@@ -57,11 +59,6 @@ class BusArrivalFragment : Fragment() {
 
   companion object {
     const val BUS_STOP_ID = "BUS_STOP_ID"
-  }
-
-  override fun onAttach(context: Context) {
-    AndroidSupportInjection.inject(this)
-    super.onAttach(context)
   }
 
   override fun onCreateView(

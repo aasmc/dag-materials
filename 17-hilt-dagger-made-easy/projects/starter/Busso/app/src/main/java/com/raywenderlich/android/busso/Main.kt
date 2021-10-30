@@ -35,7 +35,7 @@
 package com.raywenderlich.android.busso
 
 import android.app.Application
-import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
-@AndroidEntryPoint
+@HiltAndroidApp
 class Main : Application()

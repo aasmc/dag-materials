@@ -37,6 +37,8 @@ package com.raywenderlich.android.busso.network
 import com.raywenderlich.android.network.di.NetworkingModule
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -45,6 +47,7 @@ import javax.inject.Singleton
     NetworkingModule::class
   ]
 )
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
   @Provides

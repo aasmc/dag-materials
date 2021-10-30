@@ -44,11 +44,13 @@ import com.raywenderlich.android.busso.R
 import com.raywenderlich.android.plugins.engine.ui.InformationPluginPresenter
 import com.raywenderlich.android.plugins.engine.ui.InformationPluginViewBinder
 import dagger.android.support.AndroidSupportInjection
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * The Fragment which displays the list of BusStop close to the
  */
+@AndroidEntryPoint
 class BusStopFragment : Fragment() {
 
   @Inject
@@ -62,11 +64,6 @@ class BusStopFragment : Fragment() {
 
   @Inject
   lateinit var informationPresenter: InformationPluginPresenter
-
-  override fun onAttach(context: Context) {
-    AndroidSupportInjection.inject(this)
-    super.onAttach(context)
-  }
 
   override fun onCreateView(
     inflater: LayoutInflater,

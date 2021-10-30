@@ -45,8 +45,11 @@ import com.raywenderlich.android.busso.ui.view.busstop.BusStopListViewBinderImpl
 import com.raywenderlich.android.plugins.engine.di.InformationPluginEngineModule
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.FragmentComponent
 
 @Module(includes = [InformationPluginEngineModule.FragmentBindings::class])
+@InstallIn(FragmentComponent::class)
 interface FragmentModule {
 
   @Binds

@@ -47,62 +47,62 @@ import javax.inject.Named
 
 /** The ViewBinder implementation for the SplashActivity */
 class SplashViewBinderImpl @Inject constructor(
-  @Named("Splash") private val navigator: Navigator
+    private val navigator: Navigator
 ) : SplashViewBinder {
 
-  companion object {
-    private const val LOCATION_PERMISSION_REQUEST_ID = 1
-  }
-
-  private val handler = Handler()
-  private lateinit var splashActivity: SplashActivity
-
-  override fun init(rootView: SplashActivity) {
-    splashActivity = rootView
-  }
-
-  override fun goToMain() {
-    handler.post {
-      navigator.navigateTo(
-        ActivityIntentDestination(
-          Intent(splashActivity, MainActivity::class.java)
-        )
-      )
-      with(splashActivity) {
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        finish()
-      }
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_ID = 1
     }
-  }
 
-  override fun handleError(error: Throwable) {
-    TODO("Not yet implemented")
-  }
+    private val handler = Handler()
+    private lateinit var splashActivity: SplashActivity
 
-  override fun requestLocationPermission() {
-    ActivityCompat.requestPermissions(
-      splashActivity,
-      arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-      LOCATION_PERMISSION_REQUEST_ID
-    )
-  }
+    override fun init(rootView: SplashActivity) {
+        splashActivity = rootView
+    }
 
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<String>,
-    grantResults: IntArray
-  ) {
-    when (requestCode) {
-      LOCATION_PERMISSION_REQUEST_ID -> {
-        // If request is cancelled, the result arrays are empty.
-        if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-          // Permission granted! We go on!
-          goToMain()
-        } else {
-          // Request denied, we request again
-          requestLocationPermission()
+    override fun goToMain() {
+        handler.post {
+            navigator.navigateTo(
+                ActivityIntentDestination(
+                    Intent(splashActivity, MainActivity::class.java)
+                )
+            )
+            with(splashActivity) {
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                finish()
+            }
         }
-      }
     }
-  }
+
+    override fun handleError(error: Throwable) {
+        TODO("Not yet implemented")
+    }
+
+    override fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(
+            splashActivity,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_PERMISSION_REQUEST_ID
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST_ID -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // Permission granted! We go on!
+                    goToMain()
+                } else {
+                    // Request denied, we request again
+                    requestLocationPermission()
+                }
+            }
+        }
+    }
 }

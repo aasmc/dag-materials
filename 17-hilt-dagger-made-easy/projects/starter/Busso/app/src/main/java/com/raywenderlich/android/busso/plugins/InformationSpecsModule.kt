@@ -37,6 +37,8 @@ package com.raywenderlich.android.busso.plugins
 import com.raywenderlich.android.plugins.weather.di.WeatherModule
 import com.raywenderlich.android.plugins.whereami.di.WhereAmIModule
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 @Module(
   includes = [
@@ -44,4 +46,5 @@ import dagger.Module
     WeatherModule::class
   ]
 )
+@InstallIn(SingletonComponent::class)
 object InformationSpecsModule
